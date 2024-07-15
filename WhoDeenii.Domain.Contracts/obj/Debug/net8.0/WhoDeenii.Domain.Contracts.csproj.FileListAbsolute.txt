@@ -1,0 +1,17 @@
+C:\Users\laptop wala\source\repos\WhodeeniiCoreAPI\WhoDeenii.Domain.Contracts\bin\Debug\net8.0\WhoDeenii.Domain.Contracts.deps.json
+C:\Users\laptop wala\source\repos\WhodeeniiCoreAPI\WhoDeenii.Domain.Contracts\bin\Debug\net8.0\WhoDeenii.Domain.Contracts.dll
+C:\Users\laptop wala\source\repos\WhodeeniiCoreAPI\WhoDeenii.Domain.Contracts\bin\Debug\net8.0\WhoDeenii.Domain.Contracts.pdb
+C:\Users\laptop wala\source\repos\WhodeeniiCoreAPI\WhoDeenii.Domain.Contracts\bin\Debug\net8.0\WhoDeenii.DTO.dll
+C:\Users\laptop wala\source\repos\WhodeeniiCoreAPI\WhoDeenii.Domain.Contracts\bin\Debug\net8.0\WhoDeenii.Infrastructure.DataAccess.dll
+C:\Users\laptop wala\source\repos\WhodeeniiCoreAPI\WhoDeenii.Domain.Contracts\bin\Debug\net8.0\WhoDeenii.DTO.pdb
+C:\Users\laptop wala\source\repos\WhodeeniiCoreAPI\WhoDeenii.Domain.Contracts\bin\Debug\net8.0\WhoDeenii.Infrastructure.DataAccess.pdb
+C:\Users\laptop wala\source\repos\WhodeeniiCoreAPI\WhoDeenii.Domain.Contracts\obj\Debug\net8.0\WhoDeenii.Domain.Contracts.csproj.AssemblyReference.cache
+C:\Users\laptop wala\source\repos\WhodeeniiCoreAPI\WhoDeenii.Domain.Contracts\obj\Debug\net8.0\WhoDeenii.Domain.Contracts.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\laptop wala\source\repos\WhodeeniiCoreAPI\WhoDeenii.Domain.Contracts\obj\Debug\net8.0\WhoDeenii.Domain.Contracts.AssemblyInfoInputs.cache
+C:\Users\laptop wala\source\repos\WhodeeniiCoreAPI\WhoDeenii.Domain.Contracts\obj\Debug\net8.0\WhoDeenii.Domain.Contracts.AssemblyInfo.cs
+C:\Users\laptop wala\source\repos\WhodeeniiCoreAPI\WhoDeenii.Domain.Contracts\obj\Debug\net8.0\WhoDeenii.Domain.Contracts.csproj.CoreCompileInputs.cache
+C:\Users\laptop wala\source\repos\WhodeeniiCoreAPI\WhoDeenii.Domain.Contracts\obj\Debug\net8.0\WhoDeeni.C19039C3.Up2Date
+C:\Users\laptop wala\source\repos\WhodeeniiCoreAPI\WhoDeenii.Domain.Contracts\obj\Debug\net8.0\WhoDeenii.Domain.Contracts.dll
+C:\Users\laptop wala\source\repos\WhodeeniiCoreAPI\WhoDeenii.Domain.Contracts\obj\Debug\net8.0\refint\WhoDeenii.Domain.Contracts.dll
+C:\Users\laptop wala\source\repos\WhodeeniiCoreAPI\WhoDeenii.Domain.Contracts\obj\Debug\net8.0\WhoDeenii.Domain.Contracts.pdb
+C:\Users\laptop wala\source\repos\WhodeeniiCoreAPI\WhoDeenii.Domain.Contracts\obj\Debug\net8.0\ref\WhoDeenii.Domain.Contracts.dll

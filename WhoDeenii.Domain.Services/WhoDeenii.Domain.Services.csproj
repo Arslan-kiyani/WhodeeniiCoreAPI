@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+ 
+
+  <ItemGroup>
+    <ProjectReference Include="..\WhoDeenii.Domain.Contracts\WhoDeenii.Domain.Contracts.csproj" />
+    <ProjectReference Include="..\WhoDeenii.DTO\WhoDeenii.DTO.csproj" />
+    <ProjectReference Include="..\WhoDeenii.Infrastructure.Repository\WhoDeenii.Infrastructure.Repository.csproj" />
+  </ItemGroup>
+
+</Project>

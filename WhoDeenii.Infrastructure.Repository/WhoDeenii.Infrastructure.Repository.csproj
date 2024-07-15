@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+    <PackageReference Include="FluentAssertions" Version="6.12.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WhoDeenii.Domain.Contracts\WhoDeenii.Domain.Contracts.csproj" />
+    <ProjectReference Include="..\WhoDeenii.DTO\WhoDeenii.DTO.csproj" />
+    <ProjectReference Include="..\WhoDeenii.Infrastructure.DataAccess\WhoDeenii.Infrastructure.DataAccess.csproj" />
+  </ItemGroup>
+
+</Project>
