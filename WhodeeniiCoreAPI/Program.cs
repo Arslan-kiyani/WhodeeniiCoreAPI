@@ -1,3 +1,4 @@
+using FluentAssertions.Common;
 using Microsoft.EntityFrameworkCore;
 using WhoDeenii.API.Extensions;
 using WhoDeenii.Domain.Contracts.Interfaces;
@@ -24,6 +25,16 @@ namespace WhodeeniiCoreAPI
                    options.UseSqlServer(builder.Configuration.GetConnectionString("WhoDeenii")));
 
             builder.Services.AddControllers();
+            //builder.Services.AddCors(options =>
+            //{
+            //    options.AddPolicy("AllowAllOrigins",
+            //        builder =>
+            //        {
+            //            builder.AllowAnyOrigin()
+            //                   .AllowAnyMethod()
+            //                   .AllowAnyHeader();
+            //        });
+            //});
 
             // Add AutoMapper
             builder.Services.AddAutoMapper(typeof(MappingProfile));
@@ -44,7 +55,7 @@ namespace WhodeeniiCoreAPI
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-
+            //app.UseCors("AllowAllOrigins");
             app.UseHttpsRedirection();
 
             app.UseAuthorization();

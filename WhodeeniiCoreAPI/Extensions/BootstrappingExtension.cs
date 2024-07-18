@@ -19,6 +19,7 @@ namespace WhoDeenii.API.Extensions
             services.AddTransient<IImageService, ImageService>();
             services.AddTransient<IAttachedDocumentService, AttachedDocumentService>();
             services.AddTransient<ICommentsService, CommentsService>();
+            services.AddScoped<IPhotoService, PhotoService>();
         }
     }
 }

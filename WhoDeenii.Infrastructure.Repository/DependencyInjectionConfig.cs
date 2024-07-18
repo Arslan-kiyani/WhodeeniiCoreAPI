@@ -23,6 +23,8 @@ namespace WhoDeenii.Infrastructure.Repository
             services.AddTransient<ISmsMessageRepository, SmsMessageRepository>();
             services.AddTransient<IAttachDocumentsRepository, AttachDocumentsRepository>();
             services.AddTransient<ICommentsRepository, CommentsRepository>();
+            services.AddTransient<IPhotoRepository, PhotoRepository>();
+            
         }
     }
 }
