@@ -2903,19 +2903,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\laptop wala\\.nuget\\packages\\": {}
+    "C:\\Users\\Laptop Wala\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\laptop wala\\source\\repos\\WhodeeniiCoreAPI\\WhoDeenii.Infrastructure.DataAccess\\WhoDeenii.Infrastructure.DataAccess.csproj",
+      "projectUniqueName": "C:\\Users\\Laptop Wala\\Desktop\\SAIM\\New folder\\Whodeeni\\WhoDeenii.Infrastructure.DataAccess\\WhoDeenii.Infrastructure.DataAccess.csproj",
       "projectName": "WhoDeenii.Infrastructure.DataAccess",
-      "projectPath": "C:\\Users\\laptop wala\\source\\repos\\WhodeeniiCoreAPI\\WhoDeenii.Infrastructure.DataAccess\\WhoDeenii.Infrastructure.DataAccess.csproj",
-      "packagesPath": "C:\\Users\\laptop wala\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\laptop wala\\source\\repos\\WhodeeniiCoreAPI\\WhoDeenii.Infrastructure.DataAccess\\obj\\",
+      "projectPath": "C:\\Users\\Laptop Wala\\Desktop\\SAIM\\New folder\\Whodeeni\\WhoDeenii.Infrastructure.DataAccess\\WhoDeenii.Infrastructure.DataAccess.csproj",
+      "packagesPath": "C:\\Users\\Laptop Wala\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Laptop Wala\\Desktop\\SAIM\\New folder\\Whodeeni\\WhoDeenii.Infrastructure.DataAccess\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\laptop wala\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Laptop Wala\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -2935,11 +2935,6 @@
         "warnAsError": [
           "NU1605"
         ]
-      },
-      "restoreAuditProperties": {
-        "enableAudit": "true",
-        "auditLevel": "low",
-        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -2975,7 +2970,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.205/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

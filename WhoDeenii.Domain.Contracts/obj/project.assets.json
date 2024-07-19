@@ -3075,19 +3075,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\laptop wala\\.nuget\\packages\\": {}
+    "C:\\Users\\Laptop Wala\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\laptop wala\\source\\repos\\WhodeeniiCoreAPI\\WhoDeenii.Domain.Contracts\\WhoDeenii.Domain.Contracts.csproj",
+      "projectUniqueName": "C:\\Users\\Laptop Wala\\Desktop\\SAIM\\New folder\\Whodeeni\\WhoDeenii.Domain.Contracts\\WhoDeenii.Domain.Contracts.csproj",
       "projectName": "WhoDeenii.Domain.Contracts",
-      "projectPath": "C:\\Users\\laptop wala\\source\\repos\\WhodeeniiCoreAPI\\WhoDeenii.Domain.Contracts\\WhoDeenii.Domain.Contracts.csproj",
-      "packagesPath": "C:\\Users\\laptop wala\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\laptop wala\\source\\repos\\WhodeeniiCoreAPI\\WhoDeenii.Domain.Contracts\\obj\\",
+      "projectPath": "C:\\Users\\Laptop Wala\\Desktop\\SAIM\\New folder\\Whodeeni\\WhoDeenii.Domain.Contracts\\WhoDeenii.Domain.Contracts.csproj",
+      "packagesPath": "C:\\Users\\Laptop Wala\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Laptop Wala\\Desktop\\SAIM\\New folder\\Whodeeni\\WhoDeenii.Domain.Contracts\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\laptop wala\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Laptop Wala\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -3101,11 +3101,11 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\laptop wala\\source\\repos\\WhodeeniiCoreAPI\\WhoDeenii.DTO\\WhoDeenii.DTO.csproj": {
-              "projectPath": "C:\\Users\\laptop wala\\source\\repos\\WhodeeniiCoreAPI\\WhoDeenii.DTO\\WhoDeenii.DTO.csproj"
+            "C:\\Users\\Laptop Wala\\Desktop\\SAIM\\New folder\\Whodeeni\\WhoDeenii.DTO\\WhoDeenii.DTO.csproj": {
+              "projectPath": "C:\\Users\\Laptop Wala\\Desktop\\SAIM\\New folder\\Whodeeni\\WhoDeenii.DTO\\WhoDeenii.DTO.csproj"
             },
-            "C:\\Users\\laptop wala\\source\\repos\\WhodeeniiCoreAPI\\WhoDeenii.Infrastructure.DataAccess\\WhoDeenii.Infrastructure.DataAccess.csproj": {
-              "projectPath": "C:\\Users\\laptop wala\\source\\repos\\WhodeeniiCoreAPI\\WhoDeenii.Infrastructure.DataAccess\\WhoDeenii.Infrastructure.DataAccess.csproj"
+            "C:\\Users\\Laptop Wala\\Desktop\\SAIM\\New folder\\Whodeeni\\WhoDeenii.Infrastructure.DataAccess\\WhoDeenii.Infrastructure.DataAccess.csproj": {
+              "projectPath": "C:\\Users\\Laptop Wala\\Desktop\\SAIM\\New folder\\Whodeeni\\WhoDeenii.Infrastructure.DataAccess\\WhoDeenii.Infrastructure.DataAccess.csproj"
             }
           }
         }
@@ -3114,11 +3114,6 @@
         "warnAsError": [
           "NU1605"
         ]
-      },
-      "restoreAuditProperties": {
-        "enableAudit": "true",
-        "auditLevel": "low",
-        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -3146,7 +3141,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.205/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
