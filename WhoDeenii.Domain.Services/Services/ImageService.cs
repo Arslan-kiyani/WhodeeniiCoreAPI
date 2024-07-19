@@ -12,13 +12,10 @@ namespace WhoDeenii.Domain.Services.Services
 {
     public class ImageService : IImageService
     {
-
-        private readonly ILogger<ImageService> _logger;
         private readonly IImageRepository _imageRepository;
 
-        public ImageService(ILogger<ImageService> logger, IImageRepository imageRepository)
+        public ImageService( IImageRepository imageRepository)
         {
-            _logger = logger;
             _imageRepository = imageRepository;
         }
 

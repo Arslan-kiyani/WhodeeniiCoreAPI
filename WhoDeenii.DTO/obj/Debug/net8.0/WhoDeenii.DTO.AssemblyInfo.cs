@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WhoDeenii.DTO")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fc4caaa50395774881d7e7afed1c96ade14b926f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fe9006a90c294ee2af001f534c77409a0bb310a9")]
 [assembly: System.Reflection.AssemblyProductAttribute("WhoDeenii.DTO")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WhoDeenii.DTO")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

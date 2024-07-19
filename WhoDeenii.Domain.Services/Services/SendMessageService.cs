@@ -14,14 +14,12 @@ namespace WhoDeenii.Domain.Services.Services
     {
         private readonly ISendMessageRepository _whatsAppMessageRepository;
         private readonly IMapper _mapper;
-        private readonly ILogger<SendMessageService> _logger;
         private readonly ISmsMessageRepository _smsMessageRepository;
 
-        public SendMessageService(ISendMessageRepository whatsAppMessageRepository, IMapper mapper, ILogger<SendMessageService> logger, ISmsMessageRepository smsMessageRepository)
+        public SendMessageService(ISendMessageRepository whatsAppMessageRepository, IMapper mapper, ISmsMessageRepository smsMessageRepository)
         {
             _whatsAppMessageRepository = whatsAppMessageRepository;
             _mapper = mapper;
-            _logger = logger;
             _smsMessageRepository = smsMessageRepository;
         }
 
@@ -71,7 +69,6 @@ namespace WhoDeenii.Domain.Services.Services
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error occurred while sending message");
                 response.IsRequestSuccessful = false;
                 response.ErrorMessage = "An error occurred while sending the message.";
             }

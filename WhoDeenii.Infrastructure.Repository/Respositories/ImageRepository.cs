@@ -20,14 +20,5 @@ namespace WhoDeenii.Infrastructure.Repository.Respositories
             return await File.ReadAllBytesAsync(imagePath);
         }
 
-        public Task<byte[]> GetImageBytesAsync(ImageBaseRequest baseRequest)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool ImageExists(ImageBaseRequest baseRequest)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

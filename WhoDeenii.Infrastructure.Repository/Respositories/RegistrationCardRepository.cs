@@ -12,26 +12,16 @@ namespace WhoDeenii.Infrastructure.Repository.Respositories
     public class RegistrationCardRepository : IRegistrationCardRepository
     {
         private readonly WhoDeeniiDbContext _context;
-        private readonly ILogger<RegistrationCardRepository> _logger;
 
-        public RegistrationCardRepository(WhoDeeniiDbContext context, ILogger<RegistrationCardRepository> logger)
+        public RegistrationCardRepository(WhoDeeniiDbContext context)
         {
             _context = context;
-            _logger = logger;
         }
 
         public async Task AddRegistrationCardAsync(RegistrationCard registrationCard)
         {
-            try
-            {
-                await _context.AddAsync(registrationCard);
-                await _context.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "An error occurred while adding registration card");
-               
-            }
+            await _context.AddAsync(registrationCard);
+            await _context.SaveChangesAsync();
         }
 
         public async Task<bool> CheckReservationIdAsync(string reservationId)

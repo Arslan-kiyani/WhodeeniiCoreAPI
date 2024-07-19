@@ -12,14 +12,12 @@ namespace WhoDeenii.Infrastructure.Repository.Respositories
 {
     public class SmsMessageRepository : ISmsMessageRepository
     {
-
         private readonly WhoDeeniiDbContext _whoDeeniiDbContext;
-        private readonly ILogger<SmsMessageRepository> _logger;
-        public SmsMessageRepository(WhoDeeniiDbContext whoDeeniiDbContext, ILogger<SmsMessageRepository> logger)
+        public SmsMessageRepository(WhoDeeniiDbContext whoDeeniiDbContext)
         {
             _whoDeeniiDbContext = whoDeeniiDbContext;
-            _logger = logger;
         }
+
         public async Task SendMessageAsync(SmsMessage sms)
         {
             await _whoDeeniiDbContext.AddAsync(sms);

@@ -15,11 +15,9 @@ namespace WhoDeenii.Infrastructure.Repository.Respositories
     public class SendMessageRepository : ISendMessageRepository
     {
         private readonly WhoDeeniiDbContext _whoDeeniiDbContext;
-        private readonly ILogger<SendMessageRepository> _logger;
-        public SendMessageRepository(WhoDeeniiDbContext whoDeeniiDbContext, ILogger<SendMessageRepository> logger)
+        public SendMessageRepository(WhoDeeniiDbContext whoDeeniiDbContext)
         {
             _whoDeeniiDbContext = whoDeeniiDbContext;
-            _logger = logger;
         }
 
         public async Task<bool> CheckReservationIdAsync(string reservationId)

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using System.IO;
 using WhoDeenii.Domain.Contracts.Interfaces;
 using WhoDeenii.DTO.Requests;
@@ -14,13 +15,13 @@ namespace WhoDeenii.Domain.Services.Services
     {
         private readonly IRegistrationCardRepository _repository;
         private readonly IMapper _mapper;
-        private readonly ILogger<RegistrationCardService> _logger;
+        private readonly ImageSettings _imageSettings;
 
-        public RegistrationCardService(IRegistrationCardRepository repository, IMapper mapper, ILogger<RegistrationCardService> logger)
+        public RegistrationCardService(IRegistrationCardRepository repository, IMapper mapper,IOptions<ImageSettings> options)
         {
             _repository = repository;
             _mapper = mapper;
-            _logger = logger;
+            _imageSettings = options.Value;
         }
 
         public async Task<ApiResponse<string>> AddRegistrationCardAsync(RegistrationCardRequest registrationCardRequest)
@@ -45,7 +46,7 @@ namespace WhoDeenii.Domain.Services.Services
                 {
                     string timestamp = DateTime.Now.ToString("yyyy MM dd HHmmss");
                     var fileName = $"{timestamp}_{registrationCardRequest.Imagepath.FileName}";
-                    var imagePath = Path.Combine("C:\\Users\\laptop wala\\Documents\\Images", fileName);
+                    var imagePath = Path.Combine(_imageSettings.BasePath, fileName);
 
                     try
                     {
@@ -60,7 +61,6 @@ namespace WhoDeenii.Domain.Services.Services
                     }
                     catch (Exception ex)
                     {
-                        _logger.LogError(ex, "An error occurred while saving registration card image");
                         response.IsRequestSuccessful = false;
                         response.Errors = new List<string> { "Error saving registration card image" };
                         return response;
@@ -82,8 +82,9 @@ namespace WhoDeenii.Domain.Services.Services
 
                 if (registrationCardRequest.Imagepath != null)
                 {
-                    var fileName = $"{Guid.NewGuid()}_{registrationCardRequest.Imagepath.FileName}";
-                    var imagePath = Path.Combine("C:\\Users\\laptop wala\\Documents\\Images", fileName);
+                    string timestamp = DateTime.Now.ToString("yyyy MM dd HHmmss");
+                    var fileName = $"{timestamp}_{registrationCardRequest.Imagepath.FileName}";
+                    var imagePath = Path.Combine(_imageSettings.BasePath, fileName);
 
                     try
                     {
@@ -98,7 +99,6 @@ namespace WhoDeenii.Domain.Services.Services
                     }
                     catch (Exception ex)
                     {
-                        _logger.LogError(ex, "An error occurred while saving registration card image");
                         response.IsRequestSuccessful = false;
                         response.Errors = new List<string> { "Error saving registration card image" };
                         return response;
@@ -110,12 +110,7 @@ namespace WhoDeenii.Domain.Services.Services
                 response.IsRequestSuccessful = true;
                 response.SuccessResponse = "Registration card added successfully.";
                 return response;
-            }
-          
-            
+            } 
         }
-
-
     }
-
 }

@@ -11,12 +11,10 @@ namespace WhoDeenii.Infrastructure.Repository.Respositories
     public class ProfileDetailsRepository : IProfileDetailsRepository
     {
         private readonly WhoDeeniiDbContext _whoDeeniiDbContext;
-        private readonly ILogger<ProfileDetailsRepository> _logger;
 
-        public ProfileDetailsRepository(WhoDeeniiDbContext whoDeeniiDbContext, ILogger<ProfileDetailsRepository> logger)
+        public ProfileDetailsRepository(WhoDeeniiDbContext whoDeeniiDbContext)
         {
             _whoDeeniiDbContext = whoDeeniiDbContext;
-            _logger = logger;
         }
 
         public async Task AddProfileDetailsAsync(ProfileDetails profile)
