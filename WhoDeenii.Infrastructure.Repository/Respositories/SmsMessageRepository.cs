@@ -22,16 +22,9 @@ namespace WhoDeenii.Infrastructure.Repository.Respositories
         }
         public async Task SendMessageAsync(SmsMessage sms)
         {
-            try
-            {
-                await _whoDeeniiDbContext.AddAsync(sms);
-                await _whoDeeniiDbContext.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "An error occurred while adding reservation details");
-
-            }
+            await _whoDeeniiDbContext.AddAsync(sms);
+            await _whoDeeniiDbContext.SaveChangesAsync();
+            
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using WhoDeenii.Domain.Contracts.Interfaces;
 using WhoDeenii.DTO.Requests;
 using WhoDeenii.DTO.Response;
@@ -12,11 +13,13 @@ namespace WhoDeenii.Domain.Services.Services
     {
         private readonly IIDDocumentRepository _repository;
         private readonly IMapper _mapper;
+        private readonly ImageSettings _imageSettings;
         
-        public IDDocumentService(IIDDocumentRepository repository, IMapper mapper)
+        public IDDocumentService(IIDDocumentRepository repository, IMapper mapper,IOptions<ImageSettings> options)
         {
             _repository = repository;
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _imageSettings = options.Value;
             
         }
 
@@ -40,8 +43,9 @@ namespace WhoDeenii.Domain.Services.Services
 
                 if (idDocumentRequest.ImagePath != null)
                 {
-                    var fileName = $"{Guid.NewGuid()}_{idDocumentRequest.ImagePath.FileName}";
-                    var imagePath = Path.Combine("C:\\Users\\laptop wala\\Documents\\Images", fileName);
+                    string timestamp = DateTime.Now.ToString("yyyy MM dd HHmmss");
+                    var fileName = $"{timestamp}_{idDocumentRequest.ImagePath.FileName}";
+                    var imagePath = Path.Combine(_imageSettings.BasePath, fileName);
 
                     try
                     {
@@ -75,8 +79,9 @@ namespace WhoDeenii.Domain.Services.Services
 
                 if (idDocumentRequest.ImagePath != null)
                 {
-                    var fileName = $"{Guid.NewGuid()}_{idDocumentRequest.ImagePath.FileName}";
-                    var imagePath = Path.Combine("C:\\Users\\laptop wala\\Documents\\Images", fileName);
+                    string timestamp = DateTime.Now.ToString("yyyy MM dd HHmmss");
+                    var fileName = $"{timestamp}_{idDocumentRequest.ImagePath.FileName}";
+                    var imagePath = Path.Combine(_imageSettings.BasePath, fileName);
 
                     try
                     {

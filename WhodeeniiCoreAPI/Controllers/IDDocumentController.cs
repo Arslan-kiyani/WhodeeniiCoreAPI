@@ -11,20 +11,28 @@ namespace WhodeeniiCoreAPI.Controllers
     public class IDDocumentController : ControllerBase
     {
         private readonly IIDDocumentService _service;
-        private readonly ILogger<IDDocumentController> _logger;
-
-        public IDDocumentController(IIDDocumentService service, ILogger<IDDocumentController> logger)
+        private readonly IPhotoService _photoService;
+        public IDDocumentController(IIDDocumentService service, IPhotoService photoService)
         {
             _service = service;
-            _logger = logger;
+            _photoService = photoService;
         }
 
         [HttpPost]
         [Route("api/AddIDDocument")]
         [Produces(typeof(ApiResponse<string>))]
-        public async Task<IActionResult> AddIDDocument([FromForm] IDDocumentRequest idDocumentRequest)
+        public async Task<IActionResult> AddIDDocument(IDDocumentRequest idDocumentRequest)
         {
             var response = await _service.AddIDDocumentAsync(idDocumentRequest);
+            return Ok(response);
+        }
+
+        [HttpPost]
+        [Route("CaptureImage")]
+        [Produces(typeof(ApiResponse<string>))]
+        public async Task<IActionResult> CaptureImage(CapRequest request)
+        {
+            var response = await _photoService.SaveImageAsync(request);
             return Ok(response);
         }
     }

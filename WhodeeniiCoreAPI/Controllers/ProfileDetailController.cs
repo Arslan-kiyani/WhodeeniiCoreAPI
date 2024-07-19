@@ -23,9 +23,18 @@ namespace WhodeeniiCoreAPI.Controllers
         [HttpPost]
         [Route("api/AddProfileDetail")]
         [Produces(typeof(ApiResponse<string>))]
-        public async Task<IActionResult> AddProfileDetail([FromForm] ProfileDetailRequest profileDetailRequest)
+        public async Task<IActionResult> AddProfileDetail(ProfileDetailRequest profileDetailRequest)
         {
             var response = await _profileDetailsService.AddProfileDetailsAsync(profileDetailRequest);
+            return Ok(response);
+        }
+
+        [HttpGet]
+        [Route("byReservationId/{reservationId}")]
+        [Produces(typeof(ApiResponse<string>))]
+        public async Task<IActionResult> GetProfileDetailsByReservationId(string reservationId)
+        {
+            var response = await _profileDetailsService.GetProfileDetailsByReservationIdAsync(reservationId);
             return Ok(response);
         }
     }

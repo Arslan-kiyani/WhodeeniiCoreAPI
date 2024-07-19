@@ -14,5 +14,8 @@ namespace WhoDeenii.Infrastructure.DataAccess.Entities
         public DateTime CreatedDate { get; set; } 
         public bool IsSent { get; set; } 
         public DateTime? SendDate { get; set; }
+        public bool IsProfileDetailsSent { get; set; }
+        public bool IsRegistrationCardSent { get; set; }
+        public bool IsIDDocumentSent { get; set; }
     }
 }
