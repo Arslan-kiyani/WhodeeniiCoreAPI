@@ -27,7 +27,6 @@ namespace WhoDeenii.Domain.Services.Services
 
             try
             {
-                //byte[] imageBytes = Convert.FromBase64String(request.ImageBytes);
                 string timestamp = DateTime.Now.ToString("yyyy MM dd HHmmss");
                 string fileName = $"{timestamp}.jpg";
                 string filePath = Path.Combine(_imageBasePath, fileName);

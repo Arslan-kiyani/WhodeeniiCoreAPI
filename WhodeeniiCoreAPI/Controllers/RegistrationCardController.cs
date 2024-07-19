@@ -11,13 +11,11 @@ namespace WhodeeniiCoreAPI.Controllers
     public class RegistrationCardController : ControllerBase
     {
         private readonly IRegistrationCardService _service;
-        private readonly ILogger<RegistrationCardController> _logger;
         private readonly IRegisterCapService _registerCapService;
 
-        public RegistrationCardController(IRegistrationCardService service, ILogger<RegistrationCardController> logger, IRegisterCapService registerCapService)
+        public RegistrationCardController(IRegistrationCardService service, IRegisterCapService registerCapService)
         {
             _service = service;
-            _logger = logger;
             _registerCapService = registerCapService;
         }
 

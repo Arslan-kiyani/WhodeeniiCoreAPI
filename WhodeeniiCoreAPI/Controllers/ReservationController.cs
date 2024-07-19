@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WhoDeenii.Domain.Contracts.Interfaces;
+using WhoDeenii.Domain.Services.Services;
 using WhoDeenii.DTO.Requests;
 using WhoDeenii.DTO.Response;
 
@@ -12,12 +13,9 @@ namespace WhodeeniiCoreAPI.Controllers
     public class ReservationController : ControllerBase
     {
         private readonly IReservationService _service;
-        private readonly ILogger<ReservationController> _logger;
-
-        public ReservationController(IReservationService service, ILogger<ReservationController> logger)
+        public ReservationController(IReservationService service)
         {
             _service = service;
-            _logger = logger;
         }
 
         [HttpPost]
@@ -29,6 +27,14 @@ namespace WhodeeniiCoreAPI.Controllers
              return Ok(response);
         }
 
+        [HttpGet]
+        [Route("byReservationId/{reservationId}")]
+        [Produces(typeof(ApiResponse<string>))]
+        public async Task<IActionResult> GetProfileDetailsByReservationId(string reservationId)
+        {
+            var response = await _service.ReservationByReservationIdAsync(reservationId);
+            return Ok(response);
+        }
         //[HttpGet]
         //[Route("{id}")]
         //[Produces(typeof(ApiResponse<string>))]

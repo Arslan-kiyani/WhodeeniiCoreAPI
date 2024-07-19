@@ -14,7 +14,6 @@ namespace WhoDeenii.Domain.Services.Services
     public class PhotoService : IPhotoService
     {
         private readonly IPhotoRepository _photoRepository;
-        //private readonly string _imageBasePath = @"C:\Users\laptop wala\Documents\Images"; 
         private readonly ImageSettings _imageBasePath;
         public PhotoService(IPhotoRepository photoRepository, IOptions<ImageSettings> options)
         {

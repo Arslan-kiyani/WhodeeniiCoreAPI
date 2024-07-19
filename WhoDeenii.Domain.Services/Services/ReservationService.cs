@@ -5,6 +5,7 @@ using WhoDeenii.DTO.Requests;
 using WhoDeenii.DTO.Response;
 using WhoDeenii.Infrastructure.DataAccess.Entities;
 using WhoDeenii.Infrastructure.Repository.Interfaces;
+using WhoDeenii.Infrastructure.Repository.Respositories;
 
 namespace WhoDeenii.Domain.Services.Services
 {
@@ -12,13 +13,11 @@ namespace WhoDeenii.Domain.Services.Services
     {
         private readonly IReservationRepository _repository;
         private readonly IMapper _mapper;
-        private readonly ILogger<ReservationService> _logger;
-
-        public ReservationService(IReservationRepository repository, IMapper mapper, ILogger<ReservationService> logger)
+       
+        public ReservationService(IReservationRepository repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
-            _logger = logger;
         }
 
         public async Task<ApiResponse<string>> AddReservationAsync(ReservationRequest reservationRequest)
@@ -37,8 +36,6 @@ namespace WhoDeenii.Domain.Services.Services
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "An error occurred while adding reservation");
-
                 response.IsRequestSuccessful = false;
                 response.Errors = new List<string> { ex.Message };
 
@@ -68,8 +65,6 @@ namespace WhoDeenii.Domain.Services.Services
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"An error occurred while retrieving reservation details for id: {id}");
-
                 response.IsRequestSuccessful = false;
                 response.Errors = new List<string> { ex.Message };
 
@@ -97,12 +92,42 @@ namespace WhoDeenii.Domain.Services.Services
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "An error occurred while retrieving reservation details");
-
                 response.IsRequestSuccessful = false;
                 response.Errors = new List<string> { ex.Message };
                 return response;
             }
+        }
+
+        public async Task<ApiResponse<Reservation>> ReservationByReservationIdAsync(string reservationId)
+        {
+            var response = new ApiResponse<Reservation>();
+            try
+            {
+                var profileDetails = await _repository.GetByReservationIdAsync(reservationId);
+                if (profileDetails != null)
+                {
+                    response.IsRequestSuccessful = true;
+                    response.SuccessResponse = new Reservation
+                    {
+                        ReservationId = profileDetails.ReservationId,
+                        GuestName = profileDetails.GuestName,
+                        HotelName = profileDetails.HotelName,
+
+                    };
+                }
+                else
+                {
+                    response.IsRequestSuccessful = false;
+                    response.ErrorMessage = "Reservation details not found.";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsRequestSuccessful = false;
+                response.Errors = new List<string> { ex.Message };
+            }
+
+            return response;
         }
     }
 

@@ -10,5 +10,7 @@ namespace WhoDeenii.Domain.Contracts.Interfaces
         Task<ApiResponse<string>> GetReservationByIdAsync(int id);
 
         Task<ApiResponse<GetReservationDetailsResponse>> GetReservationDetailsByReservationIdAsync(string reservationId);
+
+        Task<ApiResponse<Reservation>> ReservationByReservationIdAsync(string reservationId);
     }
 }
