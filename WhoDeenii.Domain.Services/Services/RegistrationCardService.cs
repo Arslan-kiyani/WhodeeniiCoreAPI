@@ -43,7 +43,8 @@ namespace WhoDeenii.Domain.Services.Services
                 existingRegistrationCard.ModifiedDate = DateTime.Now;
                 if (registrationCardRequest.Imagepath != null)
                 {
-                    var fileName = $"{Guid.NewGuid()}_{registrationCardRequest.Imagepath.FileName}";
+                    string timestamp = DateTime.Now.ToString("yyyy MM dd HHmmss");
+                    var fileName = $"{timestamp}_{registrationCardRequest.Imagepath.FileName}";
                     var imagePath = Path.Combine("C:\\Users\\laptop wala\\Documents\\Images", fileName);
 
                     try

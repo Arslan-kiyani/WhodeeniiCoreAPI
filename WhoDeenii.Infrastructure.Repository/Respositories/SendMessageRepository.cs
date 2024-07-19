@@ -29,16 +29,9 @@ namespace WhoDeenii.Infrastructure.Repository.Respositories
 
         public async Task SendMessageAsync(WhatsAppMessage message)
         {
-            try
-            {
-                await _whoDeeniiDbContext.AddAsync(message);
-                await _whoDeeniiDbContext.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "An error occurred while adding reservation details");
-
-            }
+            await _whoDeeniiDbContext.AddAsync(message);
+            await _whoDeeniiDbContext.SaveChangesAsync();
+            
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using OpenCvSharp;
+﻿using Microsoft.Extensions.Options;
+using OpenCvSharp;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using WhoDeenii.Domain.Contracts.Interfaces;
@@ -13,10 +14,12 @@ namespace WhoDeenii.Domain.Services.Services
     public class PhotoService : IPhotoService
     {
         private readonly IPhotoRepository _photoRepository;
-        private readonly string _imageBasePath = @"C:\Users\laptop wala\Documents\Images"; 
-        public PhotoService(IPhotoRepository photoRepository)
+        //private readonly string _imageBasePath = @"C:\Users\laptop wala\Documents\Images"; 
+        private readonly ImageSettings _imageBasePath;
+        public PhotoService(IPhotoRepository photoRepository, IOptions<ImageSettings> options)
         {
             _photoRepository = photoRepository;
+            _imageBasePath = options.Value;
         }
 
         public async Task<ApiResponse<string>> SaveImageAsync(CapRequest request)
@@ -26,11 +29,13 @@ namespace WhoDeenii.Domain.Services.Services
 
             try
             {
-                //byte[] imageBytes = Convert.FromBase64String(request.ImageBytes);
-                string fileName = $"{Guid.NewGuid().ToString()}.jpg";
-                string filePath = Path.Combine(_imageBasePath, fileName);
+                byte[] imageData = GetImageDataFromRequest(request);
 
-                //await File.WriteAllBytesAsync(filePath, imageBytes);
+                string timestamp = DateTime.Now.ToString("yyyy MM dd HHmmss");
+                string fileName = $"{timestamp}.jpg";
+                string filePath = Path.Combine(_imageBasePath.BasePath, fileName);
+                
+                await SaveFileAsync(filePath, imageData);
 
                 var existingImageData = await _photoRepository.GetPhotoDocumentAsync(request.ReservationId);
 
@@ -41,10 +46,9 @@ namespace WhoDeenii.Domain.Services.Services
 
                     await _photoRepository.UpdatePhotoDocumentAsync(existingImageData);
                 }
-
                 else
                 {
-                    var imageData = new IDDocument
+                    var img = new IDDocument
                     {
                         CreatedDate = DateTime.Now,
                         ModifiedDate = DateTime.Now,
@@ -52,7 +56,7 @@ namespace WhoDeenii.Domain.Services.Services
                         ReservationId = request.ReservationId,
                     };
 
-                    await _photoRepository.AddPhotoDocumentAsync(imageData);
+                    await _photoRepository.AddPhotoDocumentAsync(img);
                 }
 
                 response.IsRequestSuccessful = true;
@@ -67,7 +71,33 @@ namespace WhoDeenii.Domain.Services.Services
 
             return response;
         }
-       
+        
+        private async Task SaveFileAsync(string filePath, byte[] fileData)
+        {
+            if (!Directory.Exists(Path.GetDirectoryName(filePath)))
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+            }
+
+            using (var fileStream = new FileStream(filePath, FileMode.CreateNew, FileAccess.Write))
+            {
+                await fileStream.WriteAsync(fileData, 0, fileData.Length);
+                await fileStream.FlushAsync();
+            }
+        }
+
+        private byte[] GetImageDataFromRequest(CapRequest request)
+        {
+            if (string.IsNullOrEmpty(request.ImageBytes))
+            {
+                throw new ArgumentException("Missing image data in request.");
+            }
+
+            string base64Data = request.ImageBytes;
+            byte[] imageData = Convert.FromBase64String(base64Data);
+            return imageData;
+        }
+
 
     }
 }

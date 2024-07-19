@@ -12,6 +12,9 @@ namespace WhoDeenii.DTO.Requests
         public string? MobileNumber { get; set; }
        // public bool IsSent { get; set; }
         public string? SendingMedium { get; set;}
-        
+         public bool IsProfileDetailsSent {  get; set; }
+        public bool IsRegistrationCardSent { get; set; }
+        public bool IsIDDocumentSent { get; set; }
+
     }
 }

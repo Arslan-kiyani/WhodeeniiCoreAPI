@@ -14,6 +14,9 @@ namespace WhoDeenii.Infrastructure.DataAccess.Entities
         public bool IsSent { get; set; } 
         public DateTime? SendDate { get; set; }
         public string? ReservationId { get; set; }
+        public bool IsProfileDetailsSent { get; set; }
+        public bool IsRegistrationCardSent { get; set; }
+        public bool IsIDDocumentSent { get; set; }
 
     }
 }

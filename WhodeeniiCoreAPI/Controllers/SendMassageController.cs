@@ -9,19 +9,19 @@ namespace WhodeeniiCoreAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class SendController : ControllerBase
+    public class SendMassageController : ControllerBase
     {
         private readonly ISendMessageService _service;
 
-        public SendController(ISendMessageService service)
+        public SendMassageController(ISendMessageService service)
         {
             _service = service;
         }
 
         [HttpPost]
-        [Route("Send")]
+        [Route("SendMassage")]
         [Produces(typeof(ApiResponse<string>))]
-        public async Task<ActionResult> Send([FromForm] WhatsAppMessageRequest message)
+        public async Task<ActionResult> SendMassage(WhatsAppMessageRequest message)
         {
             var response = await _service.SendMessageAsync(message);
             return Ok(response);

@@ -12,11 +12,13 @@ namespace WhodeeniiCoreAPI.Controllers
     {
         private readonly IRegistrationCardService _service;
         private readonly ILogger<RegistrationCardController> _logger;
+        private readonly IRegisterCapService _registerCapService;
 
-        public RegistrationCardController(IRegistrationCardService service, ILogger<RegistrationCardController> logger)
+        public RegistrationCardController(IRegistrationCardService service, ILogger<RegistrationCardController> logger, IRegisterCapService registerCapService)
         {
             _service = service;
             _logger = logger;
+            _registerCapService = registerCapService;
         }
 
         [HttpPost]
@@ -28,6 +30,16 @@ namespace WhodeeniiCoreAPI.Controllers
             return Ok(response);
            
         }
+
+        [HttpPost]
+        [Route("CaptureRegisteration")]
+        [Produces(typeof(ApiResponse<string>))]
+        public async Task<IActionResult> CaptureRegisteration(CapRequest request)
+        {
+            var response = await _registerCapService.SaveImageAsync(request);
+            return Ok(response);
+        }
+
     }
 
 }

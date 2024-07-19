@@ -8,5 +8,6 @@ namespace WhoDeenii.Infrastructure.Repository.Interfaces
     {
         //Task AddProfileDetailsAsync(ProfileDetailRequest ProfileDetailRequest);
         Task AddProfileDetailsAsync(ProfileDetails profile);
+        Task<ProfileDetails?> GetByReservationIdAsync(string reservationId);
     }
 }

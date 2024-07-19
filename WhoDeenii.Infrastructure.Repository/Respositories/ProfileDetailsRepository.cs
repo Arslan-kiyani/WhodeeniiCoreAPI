@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using WhoDeenii.Infrastructure.DataAccess;
 using WhoDeenii.Infrastructure.DataAccess.Entities;
@@ -20,16 +21,14 @@ namespace WhoDeenii.Infrastructure.Repository.Respositories
 
         public async Task AddProfileDetailsAsync(ProfileDetails profile)
         {
-            try
-            {
-                await _whoDeeniiDbContext.AddAsync(profile);
-                await _whoDeeniiDbContext.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "An error occurred while adding profile details");
-               
-            }
+            await _whoDeeniiDbContext.AddAsync(profile);
+            await _whoDeeniiDbContext.SaveChangesAsync();
+        }
+
+        public async Task<ProfileDetails?> GetByReservationIdAsync(string reservationId)
+        {
+            return await _whoDeeniiDbContext.ProfileDetails
+                                .FirstOrDefaultAsync(pd => pd.ReservationId == reservationId);
         }
     }
 

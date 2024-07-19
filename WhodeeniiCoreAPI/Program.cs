@@ -2,6 +2,7 @@ using FluentAssertions.Common;
 using Microsoft.EntityFrameworkCore;
 using WhoDeenii.API.Extensions;
 using WhoDeenii.Domain.Contracts.Interfaces;
+using WhoDeenii.Domain.Services.Services;
 using WhoDeenii.Infrastructure.DataAccess;
 using WhoDeenii.Infrastructure.Repository;
 using WhoDeenii.Infrastructure.Repository.Interfaces;
@@ -25,22 +26,14 @@ namespace WhodeeniiCoreAPI
                    options.UseSqlServer(builder.Configuration.GetConnectionString("WhoDeenii")));
 
             builder.Services.AddControllers();
-            //builder.Services.AddCors(options =>
-            //{
-            //    options.AddPolicy("AllowAllOrigins",
-            //        builder =>
-            //        {
-            //            builder.AllowAnyOrigin()
-            //                   .AllowAnyMethod()
-            //                   .AllowAnyHeader();
-            //        });
-            //});
 
+            // Configure ImageSettings
+            builder.Services.Configure<ImageSettings>(builder.Configuration.GetSection("ImageSettings"));
             // Add AutoMapper
             builder.Services.AddAutoMapper(typeof(MappingProfile));
            
             // Register dependencies
-            builder.Services.RegisterDependencies();
+            builder.Services.RegisterDependencies(builder.Configuration);
             DependencyInjectionConfig.RegisterRepository(builder.Services);
             
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

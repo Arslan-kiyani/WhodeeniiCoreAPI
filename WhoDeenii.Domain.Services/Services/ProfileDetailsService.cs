@@ -56,6 +56,37 @@ namespace WhoDeenii.Domain.Services.Services
             }
         }
 
+        public async Task<ApiResponse<ProfileDetails>> GetProfileDetailsByReservationIdAsync(string reservationId)
+        {
+            var response = new ApiResponse<ProfileDetails>();
+            try
+            {
+                var profileDetails = await _profileDetailsRepository.GetByReservationIdAsync(reservationId);
+                if (profileDetails != null)
+                {
+                    response.IsRequestSuccessful = true;
+                    response.SuccessResponse = new ProfileDetails
+                    {
+                        ReservationId = profileDetails.ReservationId,
+                        IsProfileUpdated = profileDetails.IsProfileUpdated,
+                        CreatedDate = profileDetails.CreatedDate
+                       
+                    };
+                }
+                else
+                {
+                    response.IsRequestSuccessful = false;
+                    response.ErrorMessage = "Profile details not found.";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsRequestSuccessful = false;
+                response.Errors = new List<string> { ex.Message };
+            }
+
+            return response;
+        }
     }
 
 }

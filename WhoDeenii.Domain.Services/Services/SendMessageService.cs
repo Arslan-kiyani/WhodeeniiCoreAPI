@@ -48,6 +48,7 @@ namespace WhoDeenii.Domain.Services.Services
                     WhatsApp.CreatedDate = DateTime.Now;
                     WhatsApp.SendDate = DateTime.Now.AddHours(3);
 
+
                     await _whatsAppMessageRepository.SendMessageAsync(WhatsApp);
 
                     response.IsRequestSuccessful = true;
