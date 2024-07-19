@@ -1,6 +1,6 @@
 Whodeenii Project
 Introduction
-Whodeenii is a [brief description of the project]. This project aims to [state the main purpose or goal of the project].
+Whodeenii is a .Net Project. This project aims to Learning and practicing.
 
 Features
 User Registration: Register new users with necessary details.
