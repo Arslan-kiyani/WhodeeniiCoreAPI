@@ -32,6 +32,12 @@ namespace WhoDeenii.Domain.Services.Services
                 string fileName = $"{timestamp}.jpg";
                 string filePath = Path.Combine(_imageBasePath, fileName);
 
+                // Convert the Base64 string to a byte array
+                byte[] imageBytes = Convert.FromBase64String(request.ImageBytes);
+
+                // Save the image file to the local path
+                await SaveFileAsync(filePath, imageBytes);
+
                 var existingImageData = await _registerCap.GetPhotoDocumentAsync(request.ReservationId);
 
                 if (existingImageData != null)
@@ -65,6 +71,19 @@ namespace WhoDeenii.Domain.Services.Services
             }
 
             return response;
+        }
+
+        private async Task SaveFileAsync(string filePath, byte[] fileData)
+        {
+            // Ensure the directory exists
+            string directory = Path.GetDirectoryName(filePath);
+            if (!Directory.Exists(directory))
+            {
+                Directory.CreateDirectory(directory);
+            }
+
+            // Save the image file
+            await File.WriteAllBytesAsync(filePath, fileData);
         }
     }
 }

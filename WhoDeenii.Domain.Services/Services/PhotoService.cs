@@ -29,13 +29,12 @@ namespace WhoDeenii.Domain.Services.Services
 
             try
             {
-                byte[] imageData = GetImageDataFromRequest(request);
-
                 string timestamp = DateTime.Now.ToString("yyyy MM dd HHmmss");
                 string fileName = $"{timestamp}.jpg";
                 string filePath = Path.Combine(_imageBasePath.BasePath, fileName);
-                
-                await SaveFileAsync(filePath, imageData);
+
+                byte[] imageBytes = Convert.FromBase64String(request.ImageBytes);
+                await SaveFileAsync(filePath, imageBytes);
 
                 var existingImageData = await _photoRepository.GetPhotoDocumentAsync(request.ReservationId);
 
@@ -71,7 +70,7 @@ namespace WhoDeenii.Domain.Services.Services
 
             return response;
         }
-        
+
         private async Task SaveFileAsync(string filePath, byte[] fileData)
         {
             if (!Directory.Exists(Path.GetDirectoryName(filePath)))
@@ -79,25 +78,8 @@ namespace WhoDeenii.Domain.Services.Services
                 Directory.CreateDirectory(Path.GetDirectoryName(filePath));
             }
 
-            using (var fileStream = new FileStream(filePath, FileMode.CreateNew, FileAccess.Write))
-            {
-                await fileStream.WriteAsync(fileData, 0, fileData.Length);
-                await fileStream.FlushAsync();
-            }
+            await File.WriteAllBytesAsync(filePath, fileData);
         }
-
-        private byte[] GetImageDataFromRequest(CapRequest request)
-        {
-            if (string.IsNullOrEmpty(request.ImageBytes))
-            {
-                throw new ArgumentException("Missing image data in request.");
-            }
-
-            string base64Data = request.ImageBytes;
-            byte[] imageData = Convert.FromBase64String(base64Data);
-            return imageData;
-        }
-
 
     }
 }

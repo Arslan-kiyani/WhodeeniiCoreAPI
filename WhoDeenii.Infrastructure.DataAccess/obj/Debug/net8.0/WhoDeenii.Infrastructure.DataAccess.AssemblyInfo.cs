@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WhoDeenii.Infrastructure.DataAccess")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8ce4f5f5b9bf37685f919e3a119ed70eb71c0ba6")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9431e04fb2c3c5423d31c3ea147109d4709b7e6f")]
 [assembly: System.Reflection.AssemblyProductAttribute("WhoDeenii.Infrastructure.DataAccess")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WhoDeenii.Infrastructure.DataAccess")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

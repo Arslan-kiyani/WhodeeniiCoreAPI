@@ -30,6 +30,16 @@ namespace WhodeeniiCoreAPI.Controllers
         }
 
         //[HttpGet]
+        //[Route("byReservationId/{reservationId}")]
+        //[Produces(typeof(ApiResponse<string>))]
+        //public async Task<IActionResult> GetProfileDetailsByReservationId(string reservationId)
+        //{
+        //    var response = await _service.ReservationByReservationIdAsync(reservationId);
+        //    return Ok(response);
+        //}
+
+
+        //[HttpGet]
         //[Route("{id}")]
         //[Produces(typeof(ApiResponse<string>))]
         //public async Task<IActionResult> GetreservationId(int id)
