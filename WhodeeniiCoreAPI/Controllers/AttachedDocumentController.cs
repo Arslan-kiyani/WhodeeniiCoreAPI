@@ -36,11 +36,11 @@ namespace WhodeeniiCoreAPI.Controllers
         }
 
         [HttpDelete]
-        [Route("byReservationId/{reservationId}")]
+        [Route("{id}")]
         [Produces(typeof(ApiResponse<string>))]
-        public async Task<IActionResult> DeleteAttachedDocument(string ReservationId)
+        public async Task<IActionResult> DeleteAttachedDocument(int id)
         {
-            var response = await _attachedDocumentService.DeleteAttachedDocumentAsync(ReservationId);
+            var response = await _attachedDocumentService.DeleteAttachedDocumentAsync(id);
             return Ok(response);
         }
     }

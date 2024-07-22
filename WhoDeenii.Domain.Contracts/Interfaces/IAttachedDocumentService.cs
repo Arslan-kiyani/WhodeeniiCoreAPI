@@ -12,7 +12,7 @@ namespace WhoDeenii.Domain.Contracts.Interfaces
 {
     public interface IAttachedDocumentService
     {
-        Task<ApiResponse<string>> DeleteAttachedDocumentAsync(string ReservationId);
+        Task<ApiResponse<string>> DeleteAttachedDocumentAsync(int id);
         Task<ApiResponse<List<AttachDocuments>>> ReservationByReservationIdAsync(string reservationId);
         Task<ApiResponse<string>> UploadFileAsync( AttachDocumentsRequest attach);
     }

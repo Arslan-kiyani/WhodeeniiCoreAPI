@@ -32,18 +32,15 @@ namespace WhoDeenii.Infrastructure.Repository.Respositories
             return await _context.Reservations.AnyAsync(r => r.ReservationId == reservationId);
         }
 
-        public async Task<bool> DeleteAttachedDocumentAsync(string ReservationId)
+        public async Task<bool> DeleteAttachedDocumentAsync(int id)
         {
-            var documents = await _context.attachDocuments
-                                       .Where(d => d.ReservationId == ReservationId)
-                                       .ToListAsync();
-
-            if (!documents.Any())
+            var document = await _context.attachDocuments.FindAsync(id);
+            if (document == null)
             {
                 return false;
             }
 
-            _context.attachDocuments.RemoveRange(documents);
+             _context.attachDocuments.Remove(document);
             await _context.SaveChangesAsync();
             return true;
         }
