@@ -33,6 +33,13 @@ namespace WhoDeenii.Infrastructure.Repository.Respositories
                
             }
         }
+
+        public async Task<Reservation?> GetByReservationIdAsync(string reservationId)
+        {
+            return await _whoDeeniiDbContext.Reservations
+                               .FirstOrDefaultAsync(pd => pd.ReservationId == reservationId);
+        }
+
         public async Task<Reservation> GetReservationByIdAsync(int id)
         {
 

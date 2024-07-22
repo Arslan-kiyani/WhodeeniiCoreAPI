@@ -11,20 +11,18 @@ namespace WhodeeniiCoreAPI.Controllers
     public class RegistrationCardController : ControllerBase
     {
         private readonly IRegistrationCardService _service;
-        private readonly ILogger<RegistrationCardController> _logger;
         private readonly IRegisterCapService _registerCapService;
 
-        public RegistrationCardController(IRegistrationCardService service, ILogger<RegistrationCardController> logger, IRegisterCapService registerCapService)
+        public RegistrationCardController(IRegistrationCardService service, IRegisterCapService registerCapService)
         {
             _service = service;
-            _logger = logger;
             _registerCapService = registerCapService;
         }
 
         [HttpPost]
         [Route("api/AddRegistrationCard")]
         [Produces(typeof(ApiResponse<string>))]
-        public async Task<IActionResult> AddRegistrationCard([FromForm] RegistrationCardRequest registrationCardRequest)
+        public async Task<IActionResult> AddRegistrationCard( RegistrationCardRequest registrationCardRequest)
         {
             var response = await _service.AddRegistrationCardAsync(registrationCardRequest);
             return Ok(response);

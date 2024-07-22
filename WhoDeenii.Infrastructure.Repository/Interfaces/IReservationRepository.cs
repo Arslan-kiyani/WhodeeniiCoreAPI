@@ -9,5 +9,6 @@ namespace WhoDeenii.Infrastructure.Repository.Interfaces
 
         Task<GetReservationDetailsResponse> GetReservationDetailsByReservationIdAsync(string reservationId);
         Task<bool> ReservationExistsAsync(string? reservationId);
+        Task<Reservation?> GetByReservationIdAsync(string reservationId);
     }
 }

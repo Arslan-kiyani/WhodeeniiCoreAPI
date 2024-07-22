@@ -12,31 +12,29 @@ namespace WhodeeniiCoreAPI.Controllers
     public class ReservationController : ControllerBase
     {
         private readonly IReservationService _service;
-        private readonly ILogger<ReservationController> _logger;
 
-        public ReservationController(IReservationService service, ILogger<ReservationController> logger)
+        public ReservationController(IReservationService service)
         {
             _service = service;
-            _logger = logger;
         }
 
         [HttpPost]
         [Route("api/AddReservation")]
         [Produces(typeof(ApiResponse<string>))]
-        public async Task<IActionResult> AddReservation([FromForm] ReservationRequest reservationRequest)
+        public async Task<IActionResult> AddReservation(ReservationRequest reservationRequest)
         {
             var response = await _service.AddReservationAsync(reservationRequest);
              return Ok(response);
         }
 
-        //[HttpGet]
-        //[Route("byReservationId/{reservationId}")]
-        //[Produces(typeof(ApiResponse<string>))]
-        //public async Task<IActionResult> GetProfileDetailsByReservationId(string reservationId)
-        //{
-        //    var response = await _service.ReservationByReservationIdAsync(reservationId);
-        //    return Ok(response);
-        //}
+        [HttpGet]
+        [Route("byReservationId/{reservationId}")]
+        [Produces(typeof(ApiResponse<string>))]
+        public async Task<IActionResult> GetProfileDetailsByReservationId(string reservationId)
+        {
+            var response = await _service.ReservationByReservationIdAsync(reservationId);
+            return Ok(response);
+        }
 
 
         //[HttpGet]

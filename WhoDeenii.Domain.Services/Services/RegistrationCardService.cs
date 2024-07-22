@@ -14,13 +14,10 @@ namespace WhoDeenii.Domain.Services.Services
     {
         private readonly IRegistrationCardRepository _repository;
         private readonly IMapper _mapper;
-        private readonly ILogger<RegistrationCardService> _logger;
-
-        public RegistrationCardService(IRegistrationCardRepository repository, IMapper mapper, ILogger<RegistrationCardService> logger)
+        public RegistrationCardService(IRegistrationCardRepository repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
-            _logger = logger;
         }
 
         public async Task<ApiResponse<string>> AddRegistrationCardAsync(RegistrationCardRequest registrationCardRequest)
@@ -60,7 +57,7 @@ namespace WhoDeenii.Domain.Services.Services
                     }
                     catch (Exception ex)
                     {
-                        _logger.LogError(ex, "An error occurred while saving registration card image");
+                        
                         response.IsRequestSuccessful = false;
                         response.Errors = new List<string> { "Error saving registration card image" };
                         return response;
@@ -98,7 +95,7 @@ namespace WhoDeenii.Domain.Services.Services
                     }
                     catch (Exception ex)
                     {
-                        _logger.LogError(ex, "An error occurred while saving registration card image");
+                        
                         response.IsRequestSuccessful = false;
                         response.Errors = new List<string> { "Error saving registration card image" };
                         return response;

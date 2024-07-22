@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Options;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,10 +17,13 @@ namespace WhoDeenii.Domain.Services.Services
     {
 
         private readonly IRegisterCapRepository _registerCap;
-        private readonly string _imageBasePath = @"C:\Users\laptop wala\Documents\Images";
-        public RegisterCapService(IRegisterCapRepository registerCap)
+        //private readonly string _imageBasePath = @"C:\Users\laptop wala\Documents\Images";
+        private readonly ImageSettings _imageBasePath;
+        public RegisterCapService(IRegisterCapRepository registerCap, IOptions<ImageSettings> Option)
         {
             _registerCap = registerCap;
+            _imageBasePath = Option.Value;
+
         }
         public async Task<ApiResponse<string>> SaveImageAsync(CapRequest request)
         {
@@ -28,14 +32,12 @@ namespace WhoDeenii.Domain.Services.Services
             try
             {
                 //byte[] imageBytes = Convert.FromBase64String(request.ImageBytes);
-                string timestamp = DateTime.Now.ToString("yyyy MM dd HHmmss");
+                string timestamp = DateTime.Now.ToString("yyyy/MM/dd_HH-mm-ss");
                 string fileName = $"{timestamp}.jpg";
-                string filePath = Path.Combine(_imageBasePath, fileName);
+                string filePath = Path.Combine(_imageBasePath.BasePath, fileName);
 
-                // Convert the Base64 string to a byte array
                 byte[] imageBytes = Convert.FromBase64String(request.ImageBytes);
 
-                // Save the image file to the local path
                 await SaveFileAsync(filePath, imageBytes);
 
                 var existingImageData = await _registerCap.GetPhotoDocumentAsync(request.ReservationId);
@@ -75,14 +77,13 @@ namespace WhoDeenii.Domain.Services.Services
 
         private async Task SaveFileAsync(string filePath, byte[] fileData)
         {
-            // Ensure the directory exists
+            
             string directory = Path.GetDirectoryName(filePath);
             if (!Directory.Exists(directory))
             {
                 Directory.CreateDirectory(directory);
             }
 
-            // Save the image file
             await File.WriteAllBytesAsync(filePath, fileData);
         }
     }

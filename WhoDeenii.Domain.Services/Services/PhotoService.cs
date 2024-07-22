@@ -29,7 +29,7 @@ namespace WhoDeenii.Domain.Services.Services
 
             try
             {
-                string timestamp = DateTime.Now.ToString("yyyy MM dd HHmmss");
+                string timestamp = DateTime.Now.ToString("yyyy/MM/dd_HH-mm-ss");
                 string fileName = $"{timestamp}.jpg";
                 string filePath = Path.Combine(_imageBasePath.BasePath, fileName);
 
