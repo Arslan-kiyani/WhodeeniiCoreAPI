@@ -56,7 +56,7 @@ namespace WhoDeenii.Domain.Services.Services
                 if (!comments.Any())
                 {
                     response.IsRequestSuccessful = false;
-                    response.Errors = new List<string> { "Reservation ID does not exist in Comments table." };
+                    response.Errors = new List<string> { "Invalid  Reservation Id." };
                     return response;
                 }
 

@@ -26,5 +26,19 @@ namespace WhoDeenii.Infrastructure.Repository.Respositories
             await _context.SaveChangesAsync();
             return true;    
         }
+
+        public async Task<bool> CheckReservationIdAsync(string? reservationId)
+        {
+            return await _context.Reservations.AnyAsync(r => r.ReservationId == reservationId);
+        }
+
+        public async Task<List<AttachDocuments>> GetByReservationIdAsync(string reservationId)
+        {
+            var attachedDocuments = await _context.attachDocuments
+                                          .Where(pd => pd.ReservationId == reservationId)
+                                          .ToListAsync();
+
+            return attachedDocuments;
+        }
     }
 }

@@ -6,11 +6,13 @@ using System.Text;
 using System.Threading.Tasks;
 using WhoDeenii.DTO.Requests;
 using WhoDeenii.DTO.Response;
+using WhoDeenii.Infrastructure.DataAccess.Entities;
 
 namespace WhoDeenii.Domain.Contracts.Interfaces
 {
     public interface IAttachedDocumentService
     {
-        Task<ApiResponse<string>> UploadFileAsync(IFormFile file);
+        Task<ApiResponse<List<AttachDocuments>>> ReservationByReservationIdAsync(string reservationId);
+        Task<ApiResponse<string>> UploadFileAsync( AttachDocumentsRequest attach);
     }
 }

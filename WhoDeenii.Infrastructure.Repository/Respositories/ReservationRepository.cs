@@ -13,25 +13,17 @@ namespace WhoDeenii.Infrastructure.Repository.Respositories
     {
 
         private readonly WhoDeeniiDbContext _whoDeeniiDbContext;
-        private readonly ILogger<ReservationRepository> _logger;
-        public ReservationRepository(WhoDeeniiDbContext whoDeeniiDbContext,ILogger<ReservationRepository> logger)
+       
+        public ReservationRepository(WhoDeeniiDbContext whoDeeniiDbContext)
         {
             _whoDeeniiDbContext = whoDeeniiDbContext;
-            _logger = logger;
         }
 
         public async Task AddReservationAsync(Reservation basicDetails)
         {
-            try
-            {
-                await _whoDeeniiDbContext.AddAsync(basicDetails);
-                await _whoDeeniiDbContext.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "An error occurred while adding reservation details");
-               
-            }
+            await _whoDeeniiDbContext.AddAsync(basicDetails);
+            await _whoDeeniiDbContext.SaveChangesAsync();
+         
         }
 
         public async Task<Reservation?> GetByReservationIdAsync(string reservationId)

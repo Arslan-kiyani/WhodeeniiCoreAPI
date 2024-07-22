@@ -11,5 +11,7 @@ namespace WhoDeenii.Infrastructure.Repository.Interfaces
     public interface IAttachDocumentsRepository
     {
         Task<bool> AddDocumentAsync(AttachDocuments document);
+        Task<bool> CheckReservationIdAsync(string? reservationId);
+        Task<List<AttachDocuments>> GetByReservationIdAsync(string reservationId);
     }
 }

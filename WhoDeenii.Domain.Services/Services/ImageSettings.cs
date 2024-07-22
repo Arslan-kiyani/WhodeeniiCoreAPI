@@ -9,5 +9,6 @@ namespace WhoDeenii.Domain.Services.Services
     public class ImageSettings
     {
         public string BasePath { get; set; }
+        public string Basepath2 {  get; set; }
     }
 }
