@@ -19,7 +19,8 @@ namespace WhoDeenii.Infrastructure.DataAccess
         public DbSet<GetReservationDetails> GetReservationDetails { get; set; }
         public DbSet<AttachDocuments> attachDocuments {  get; set; } 
         public DbSet<Comments> Comments { get; set; }
+        public DbSet<LogEntry> Logs { get; set; }
 
-       
+
     }
 }

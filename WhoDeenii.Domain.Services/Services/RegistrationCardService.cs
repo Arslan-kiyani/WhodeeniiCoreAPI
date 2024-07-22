@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using System.IO;
 using WhoDeenii.Domain.Contracts.Interfaces;
 using WhoDeenii.DTO.Requests;
@@ -14,10 +15,14 @@ namespace WhoDeenii.Domain.Services.Services
     {
         private readonly IRegistrationCardRepository _repository;
         private readonly IMapper _mapper;
-        public RegistrationCardService(IRegistrationCardRepository repository, IMapper mapper)
+        private readonly ILoggerService _loggerService;
+        private readonly ImageSettings _imageSettings;
+        public RegistrationCardService(IRegistrationCardRepository repository, IMapper mapper, ILoggerService loggerService,IOptions<ImageSettings>  imageSettings)
         {
             _repository = repository;
             _mapper = mapper;
+            _loggerService = loggerService;
+            _imageSettings = imageSettings.Value;
         }
 
         public async Task<ApiResponse<string>> AddRegistrationCardAsync(RegistrationCardRequest registrationCardRequest)
@@ -42,7 +47,7 @@ namespace WhoDeenii.Domain.Services.Services
                 {
                     string timestamp = DateTime.Now.ToString("yyyy MM dd HHmmss");
                     var fileName = $"{timestamp}_{registrationCardRequest.Imagepath.FileName}";
-                    var imagePath = Path.Combine("C:\\Users\\laptop wala\\Documents\\Images", fileName);
+                    var imagePath = Path.Combine(_imageSettings.BasePath, fileName);
 
                     try
                     {
@@ -60,6 +65,20 @@ namespace WhoDeenii.Domain.Services.Services
                         
                         response.IsRequestSuccessful = false;
                         response.Errors = new List<string> { "Error saving registration card image" };
+
+                        var logEntry = new LogEntry
+                        {
+                            Level = "Error",
+                            Application = "WhoDeenii",
+                            MethodInfo = "SomeService.DoSomethingAsync",
+                            Message = ex.Message,
+                            Exception = ex.ToString(),
+                            Timestamp = DateTime.Now,
+                            TransactionId = ex.Message,
+                            Context = "Additional context if needed"
+                        };
+                        await _loggerService.LogAsync(logEntry);
+
                         return response;
                     }
                 }
@@ -98,6 +117,20 @@ namespace WhoDeenii.Domain.Services.Services
                         
                         response.IsRequestSuccessful = false;
                         response.Errors = new List<string> { "Error saving registration card image" };
+
+                        var logEntry = new LogEntry
+                        {
+                            Level = "Error",
+                            Application = "WhoDeenii",
+                            MethodInfo = System.Reflection.MethodBase.GetCurrentMethod().Name,
+                            Message = ex.Message,
+                            Exception = ex.ToString(),
+                            Timestamp = DateTime.Now,
+                            TransactionId = ex.Message,
+                            Context = "Additional context if needed"
+                        };
+                        await _loggerService.LogAsync(logEntry);
+
                         return response;
                     }
                 }
@@ -107,12 +140,7 @@ namespace WhoDeenii.Domain.Services.Services
                 response.IsRequestSuccessful = true;
                 response.SuccessResponse = "Registration card added successfully.";
                 return response;
-            }
-          
-            
+            }  
         }
-
-
     }
-
 }

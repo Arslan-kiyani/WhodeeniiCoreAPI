@@ -17,13 +17,13 @@ namespace WhoDeenii.Domain.Services.Services
     {
 
         private readonly IRegisterCapRepository _registerCap;
-        //private readonly string _imageBasePath = @"C:\Users\laptop wala\Documents\Images";
         private readonly ImageSettings _imageBasePath;
-        public RegisterCapService(IRegisterCapRepository registerCap, IOptions<ImageSettings> Option)
+        private readonly ILoggerService _loggerService;
+        public RegisterCapService(IRegisterCapRepository registerCap, IOptions<ImageSettings> Option, ILoggerService loggerService)
         {
             _registerCap = registerCap;
             _imageBasePath = Option.Value;
-
+            _loggerService = loggerService;
         }
         public async Task<ApiResponse<string>> SaveImageAsync(CapRequest request)
         {
@@ -31,7 +31,7 @@ namespace WhoDeenii.Domain.Services.Services
 
             try
             {
-                //byte[] imageBytes = Convert.FromBase64String(request.ImageBytes);
+                
                 string timestamp = DateTime.Now.ToString("yyyy/MM/dd_HH-mm-ss");
                 string fileName = $"{timestamp}.jpg";
                 string filePath = Path.Combine(_imageBasePath.BasePath, fileName);
@@ -69,6 +69,20 @@ namespace WhoDeenii.Domain.Services.Services
             {
                 response.IsRequestSuccessful = false;
                 response.Errors = new List<string> { ex.Message };
+
+                var logEntry = new LogEntry
+                {
+                    Level = "Error",
+                    Application = "WhoDeenii",
+                    MethodInfo = System.Reflection.MethodBase.GetCurrentMethod().Name,
+                    Message = ex.Message,
+                    Exception = ex.ToString(),
+                    Timestamp = DateTime.Now,
+                    TransactionId = ex.Message,
+                    Context = "Additional context if needed"
+                };
+                await _loggerService.LogAsync(logEntry);
+
                 return response;
             }
 

@@ -35,14 +35,13 @@ namespace WhoDeenii.Infrastructure.Repository.Respositories
         public async Task<bool> DeleteAttachedDocumentAsync(int id)
         {
             var document = await _context.attachDocuments.FindAsync(id);
-            if (document == null)
+            if (document != null)
             {
-                return false;
+                _context.attachDocuments.Remove(document);
+                await _context.SaveChangesAsync();
+                return true;
             }
-
-             _context.attachDocuments.Remove(document);
-            await _context.SaveChangesAsync();
-            return true;
+            return false;   
         }
 
         public async Task<List<AttachDocuments>> GetByReservationIdAsync(string reservationId)

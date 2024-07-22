@@ -14,12 +14,14 @@ namespace WhoDeenii.Domain.Services.Services
         private readonly IIDDocumentRepository _repository;
         private readonly IMapper _mapper;
         private readonly ImageSettings _imageSettings;
+        private readonly ILoggerService _logger;
         
-        public IDDocumentService(IIDDocumentRepository repository, IMapper mapper,IOptions<ImageSettings> options)
+        public IDDocumentService(IIDDocumentRepository repository, IMapper mapper,IOptions<ImageSettings> options,ILoggerService logger)
         {
             _repository = repository;
-            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _mapper = mapper;
             _imageSettings = options.Value;
+            _logger = logger;
             
         }
 
@@ -31,7 +33,7 @@ namespace WhoDeenii.Domain.Services.Services
             if (!reservationExists)
             {
                 response.IsRequestSuccessful = false;
-                response.Errors = new List<string> { "Reservation ID does not exist in Reservation Table" };
+                response.Errors = new List<string> { "Invalid Reservation Id" };
                 return response;
             }
 
@@ -62,6 +64,21 @@ namespace WhoDeenii.Domain.Services.Services
                     {
                         response.IsRequestSuccessful = false;
                         response.Errors = new List<string> { "Failed to save ID document image." };
+
+                        var logEntry = new LogEntry
+                        {
+                            Level = "Error",
+                            Application = "WhoDeenii",
+                            MethodInfo = System.Reflection.MethodBase.GetCurrentMethod().Name,
+                            Message = ex.Message,
+                            Exception = ex.ToString(),
+                            Timestamp = DateTime.Now,
+                            TransactionId = ex.Message,
+                            Context = "Additional context if needed"
+                        };
+
+                        await _logger.LogAsync(logEntry);
+
                         return response;
                     }
                 }
@@ -98,6 +115,21 @@ namespace WhoDeenii.Domain.Services.Services
                     {
                         response.IsRequestSuccessful = false;
                         response.Errors = new List<string> { "Failed to save ID document image." };
+
+                        var logEntry = new LogEntry
+                        {
+                            Level = "Error",
+                            Application = "WhoDeenii",
+                            MethodInfo = System.Reflection.MethodBase.GetCurrentMethod().Name,
+                            Message = ex.Message,
+                            Exception = ex.ToString(),
+                            Timestamp = DateTime.Now,
+                            TransactionId = ex.Message,
+                            Context = "Additional context if needed"
+                        };
+
+                        await _logger.LogAsync(logEntry);
+
                         return response;
                     }
                 }

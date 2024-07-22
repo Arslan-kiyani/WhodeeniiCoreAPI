@@ -12,11 +12,12 @@ namespace WhoDeenii.Domain.Services.Services
     {
         private readonly IReservationRepository _repository;
         private readonly IMapper _mapper;
-
-        public ReservationService(IReservationRepository repository, IMapper mapper)
+        private readonly ILoggerService _loggerService;
+        public ReservationService(IReservationRepository repository, IMapper mapper, ILoggerService loggerService)
         {
             _repository = repository;
             _mapper = mapper;
+            _loggerService = loggerService;
         }
 
         public async Task<ApiResponse<string>> AddReservationAsync(ReservationRequest reservationRequest)
@@ -37,6 +38,19 @@ namespace WhoDeenii.Domain.Services.Services
             {
                 response.IsRequestSuccessful = false;
                 response.Errors = new List<string> { ex.Message };
+
+                var logEntry = new LogEntry
+                {
+                    Level = "Error",
+                    Application = "WhoDeenii",
+                    MethodInfo = "SomeService.DoSomethingAsync",
+                    Message = ex.Message,
+                    Exception = ex.ToString(),
+                    Timestamp = DateTime.Now,
+                    TransactionId = ex.Message,
+                    Context = "Additional context if needed"
+                };
+                await _loggerService.LogAsync(logEntry);
 
                 return response;
             }
@@ -67,6 +81,19 @@ namespace WhoDeenii.Domain.Services.Services
                 response.IsRequestSuccessful = false;
                 response.Errors = new List<string> { ex.Message };
 
+                var logEntry = new LogEntry
+                {
+                    Level = "Error",
+                    Application = "WhoDeenii",
+                    MethodInfo = "SomeService.DoSomethingAsync",
+                    Message = ex.Message,
+                    Exception = ex.ToString(),
+                    Timestamp = DateTime.Now,
+                    TransactionId = ex.Message,
+                    Context = "Additional context if needed"
+                };
+                await _loggerService.LogAsync(logEntry);
+
                 return response;
             }
         }
@@ -93,6 +120,20 @@ namespace WhoDeenii.Domain.Services.Services
             {
                 response.IsRequestSuccessful = false;
                 response.Errors = new List<string> { ex.Message };
+
+                var logEntry = new LogEntry
+                {
+                    Level = "Error",
+                    Application = "WhoDeenii",
+                    MethodInfo = "SomeService.DoSomethingAsync",
+                    Message = ex.Message,
+                    Exception = ex.ToString(),
+                    Timestamp = DateTime.Now,
+                    TransactionId = ex.Message,
+                    Context = "Additional context if needed"
+                };
+                await _loggerService.LogAsync(logEntry);
+
                 return response;
             }
         }
@@ -124,6 +165,19 @@ namespace WhoDeenii.Domain.Services.Services
             {
                 response.IsRequestSuccessful = false;
                 response.Errors = new List<string> { ex.Message };
+
+                var logEntry = new LogEntry
+                {
+                    Level = "Error",
+                    Application = "WhoDeenii",
+                    MethodInfo = System.Reflection.MethodBase.GetCurrentMethod().Name,
+                    Message = ex.Message,
+                    Exception = ex.ToString(),
+                    Timestamp = DateTime.Now,
+                    TransactionId = ex.Message,
+                    Context = "Additional context if needed"
+                };
+                await _loggerService.LogAsync(logEntry);
             }
 
             return response;

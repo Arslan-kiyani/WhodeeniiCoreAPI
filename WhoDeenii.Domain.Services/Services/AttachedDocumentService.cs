@@ -13,11 +13,13 @@ public class AttachedDocumentService : IAttachedDocumentService
 {
     private readonly IAttachDocumentsRepository _repository;
     private readonly ImageSettings _BasePath2;
+    private readonly ILoggerService _logger;
 
-    public AttachedDocumentService(IAttachDocumentsRepository repository, IOptions<ImageSettings> options)
+    public AttachedDocumentService(IAttachDocumentsRepository repository, IOptions<ImageSettings> options,ILoggerService logger)
     {
         _repository = repository;
         _BasePath2 = options.Value;
+        _logger = logger;   
     }
 
     public async Task<ApiResponse<string>> DeleteAttachedDocumentAsync(int id)
@@ -43,7 +45,22 @@ public class AttachedDocumentService : IAttachedDocumentService
         catch (Exception ex)
         {
             response.IsRequestSuccessful = false;
-            response.Errors.Add(ex.Message);
+            response.SuccessResponse = ex.Message;
+            response.Errors = new List<string> { { $"Something went wrong Error: " } };
+
+            var logEntry = new LogEntry
+            {
+                Level = "Error",
+                Application = "WhoDeenii",
+                MethodInfo = System.Reflection.MethodBase.GetCurrentMethod().Name,
+                Message = ex.Message,
+                Exception = ex.ToString(),
+                Timestamp = DateTime.Now,
+                TransactionId = ex.Message,
+                Context = "Additional context if needed"
+            };
+
+            await _logger.LogAsync(logEntry);
         }
 
         return response;
@@ -76,6 +93,20 @@ public class AttachedDocumentService : IAttachedDocumentService
         {
             response.IsRequestSuccessful = false;
             response.Errors = new List<string> { ex.Message };
+
+            var logEntry = new LogEntry
+            {
+                Level = "Error",
+                Application = "WhoDeenii",
+                MethodInfo = System.Reflection.MethodBase.GetCurrentMethod().Name,
+                Message = ex.Message,
+                Exception = ex.ToString(),
+                Timestamp = DateTime.Now,
+                TransactionId = ex.Message,
+                Context = "Additional context if needed"
+            };
+
+            await _logger.LogAsync(logEntry);
         }
 
         return response;
@@ -93,13 +124,13 @@ public class AttachedDocumentService : IAttachedDocumentService
             if (!reservationExists)
             {
                 response.IsRequestSuccessful = false;
-                response.Errors = new List<string> { "invalid Reservation Id" };
+                response.Errors = new List<string> { "Invalid Reservation Id" };
                 return response;
             }
             if (attach.file == null || attach.file.Length == 0)
             {
                  response.IsRequestSuccessful = false;
-                 response.ErrorMessage = "No file uploaded.";
+                 response.ErrorMessage = "No file Found.";
                  return response;
             }
             var allowedExtensions = new[] { ".pdf", ".png", ".jpg", ".jpeg" };
@@ -119,16 +150,14 @@ public class AttachedDocumentService : IAttachedDocumentService
                 Directory.CreateDirectory(uploadsFolderPath);
             }
 
-            var fileName = Guid.NewGuid().ToString() + extension;
+            string timestamp = DateTime.Now.ToString("yyyy MM dd HHmmss");
+            var fileName = $"{timestamp}{extension}";
             var filePath = Path.Combine(uploadsFolderPath, fileName);
 
             using (var fileStream = new FileStream(filePath, FileMode.Create))
             {
                 await attach.file.CopyToAsync(fileStream);
             }
-
-            string dateTimeString = "2024-07-23 14:00:00"; 
-            DateTime uploadDate = DateTime.ParseExact(dateTimeString, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
 
             var document = new AttachDocuments
             {
@@ -148,6 +177,20 @@ public class AttachedDocumentService : IAttachedDocumentService
             response.IsRequestSuccessful = false;
             response.SuccessResponse = ex.Message;
             response.Errors = new List<string> { { $"Something went wrong Error: " } };
+
+            var logEntry = new LogEntry
+            {
+                Level = "Error",
+                Application = "WhoDeenii",
+                MethodInfo = System.Reflection.MethodBase.GetCurrentMethod().Name,
+                Message = ex.Message,
+                Exception = ex.ToString(),
+                Timestamp = DateTime.Now,
+                TransactionId = ex.Message,
+                Context = "Additional context if needed"
+            };
+
+            await _logger.LogAsync(logEntry);
         }
 
         return response;

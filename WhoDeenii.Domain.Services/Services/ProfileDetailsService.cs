@@ -15,12 +15,14 @@ namespace WhoDeenii.Domain.Services.Services
         private readonly IProfileDetailsRepository _profileDetailsRepository;
         private readonly IReservationRepository _reservationRepository;
         private readonly IMapper _mapper;
+        private readonly ILoggerService _loggerService;
         
-        public ProfileDetailsService(IReservationRepository reservationRepository, IProfileDetailsRepository profileDetailsRepository, IMapper mapper)
+        public ProfileDetailsService(IReservationRepository reservationRepository, IProfileDetailsRepository profileDetailsRepository, IMapper mapper,ILoggerService loggerService)
         {
             _profileDetailsRepository = profileDetailsRepository;
             _reservationRepository = reservationRepository;
             _mapper = mapper;
+            _loggerService = loggerService;
             
         }
 
@@ -51,6 +53,20 @@ namespace WhoDeenii.Domain.Services.Services
             {
                 response.IsRequestSuccessful = false;
                 response.Errors = new List<string> { ex.Message };
+
+                var logEntry = new LogEntry
+                {
+                    Level = "Error",
+                    Application = "WhoDeenii",
+                    MethodInfo = "SomeService.DoSomethingAsync",
+                    Message = ex.Message,
+                    Exception = ex.ToString(),
+                    Timestamp = DateTime.Now,
+                    TransactionId = ex.Message,
+                    Context = "Additional context if needed"
+                };
+
+                await _loggerService.LogAsync(logEntry);
 
                 return response;
             }
@@ -83,6 +99,20 @@ namespace WhoDeenii.Domain.Services.Services
             {
                 response.IsRequestSuccessful = false;
                 response.Errors = new List<string> { ex.Message };
+
+                var logEntry = new LogEntry
+                {
+                    Level = "Error",
+                    Application = "WhoDeenii",
+                    MethodInfo = System.Reflection.MethodBase.GetCurrentMethod().Name,
+                    Message = ex.Message,
+                    Exception = ex.ToString(),
+                    Timestamp = DateTime.Now,
+                    TransactionId = ex.Message,
+                    Context = "Additional context if needed"
+                };
+
+                await _loggerService.LogAsync(logEntry);
             }
 
             return response;

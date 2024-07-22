@@ -19,7 +19,8 @@ namespace WhodeeniiCoreAPI
 
             // Configure logging
             builder.Logging.ClearProviders(); 
-            builder.Logging.AddConsole();   
+            builder.Logging.AddConsole();
+
 
             // Add services to the container.
             builder.Services.AddDbContext<WhoDeeniiDbContext>(options =>

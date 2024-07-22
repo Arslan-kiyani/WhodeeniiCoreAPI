@@ -19,30 +19,52 @@ namespace WhoDeenii.Domain.Services.Services
 
         private readonly ICommentsRepository _commentsRepository;
         private readonly IMapper _mapper;
+        private readonly ILoggerService _logger;
 
-        public CommentsService(ICommentsRepository commentsRepository,IMapper mapper)
+        public CommentsService(ICommentsRepository commentsRepository,IMapper mapper, ILoggerService logger)
         {
             _commentsRepository = commentsRepository;
             _mapper = mapper;
+            _logger = logger;
         }
         public async Task<ApiResponse<string>> AddCommentAsync(CommentsRequest request)
         {
             var response = new ApiResponse<string>();
 
-            var reservationExists = await _commentsRepository.CheckReservationIdAsync(request.ReservationId);
-            if (!reservationExists)
+            try
+            {
+                var reservationExists = await _commentsRepository.CheckReservationIdAsync(request.ReservationId);
+                if (reservationExists)
+                {
+
+                    response.IsRequestSuccessful = true;
+                    response.SuccessResponse = "Comment added successfully.";
+                    return response;
+                }
+
+                var Comments = _mapper.Map<Comments>(request);
+
+                await _commentsRepository.AddCommentAsync(Comments);
+            }catch (Exception ex)
             {
                 response.IsRequestSuccessful = false;
-                response.Errors = new List<string> { "Reservation ID does not exist in the Reservation Table." };
-                return response;
+                response.Errors = new List<string> { "Invalid Reservation Id" };
+
+                var logEntry = new LogEntry
+                {
+                    Level = "Error",
+                    Application = "WhoDeenii",
+                    MethodInfo = System.Reflection.MethodBase.GetCurrentMethod().Name,
+                    Message = ex.Message,
+                    Exception = ex.ToString(),
+                    Timestamp = DateTime.Now,
+                    TransactionId = ex.Message,
+                    Context = "Additional context if needed"
+                };
+
+                await _logger.LogAsync(logEntry);
+
             }
-
-            var Comments= _mapper.Map<Comments>(request);
-
-            await _commentsRepository.AddCommentAsync(Comments);
-
-            response.IsRequestSuccessful = true;
-            response.SuccessResponse = "Comment added successfully.";
             return response;
         }
 
@@ -68,8 +90,23 @@ namespace WhoDeenii.Domain.Services.Services
             {
                 response.IsRequestSuccessful = false;
                 response.Errors = new List<string> { ex.Message };
-                return response;
+
+                var logEntry = new LogEntry
+                {
+                    Level = "Error",
+                    Application = "WhoDeenii",
+                    MethodInfo = System.Reflection.MethodBase.GetCurrentMethod().Name,
+                    Message = ex.Message,
+                    Exception = ex.ToString(),
+                    Timestamp = DateTime.Now,
+                    TransactionId = ex.Message,
+                    Context = "Additional context if needed"
+                };
+
+                await _logger.LogAsync(logEntry);
+
             }
+            return response;
         }
     }
 }
