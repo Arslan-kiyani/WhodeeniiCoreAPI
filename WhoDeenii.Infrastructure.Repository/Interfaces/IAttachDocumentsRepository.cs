@@ -12,6 +12,7 @@ namespace WhoDeenii.Infrastructure.Repository.Interfaces
     {
         Task<bool> AddDocumentAsync(AttachDocuments document);
         Task<bool> CheckReservationIdAsync(string? reservationId);
+        Task<bool> DeleteAttachedDocumentAsync(string ReservationId );
         Task<List<AttachDocuments>> GetByReservationIdAsync(string reservationId);
     }
 }

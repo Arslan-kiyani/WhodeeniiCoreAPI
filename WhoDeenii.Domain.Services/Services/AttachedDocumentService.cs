@@ -20,6 +20,34 @@ public class AttachedDocumentService : IAttachedDocumentService
         _BasePath2 = options.Value;
     }
 
+    public async Task<ApiResponse<string>> DeleteAttachedDocumentAsync(string ReservationId)
+    {
+        var response = new ApiResponse<string>();
+
+        try
+        {
+            var isDeleted = await _repository.DeleteAttachedDocumentAsync(ReservationId);
+
+            if (isDeleted)
+            {
+                response.IsRequestSuccessful = true;
+                response.SuccessResponse = "Document deleted successfully.";
+            }
+            else
+            {
+                response.IsRequestSuccessful = false;
+                response.Errors = new List<string> { "Document not found." };
+            }
+        }
+        catch (Exception ex)
+        {
+            response.IsRequestSuccessful = false;
+            response.Errors.Add(ex.Message);
+        }
+
+        return response;
+    }
+
     public async Task<ApiResponse<List<AttachDocuments>>> ReservationByReservationIdAsync(string reservationId)
     {
         var response = new ApiResponse<List<AttachDocuments>>();
