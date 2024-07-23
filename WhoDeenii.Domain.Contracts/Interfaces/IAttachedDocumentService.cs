@@ -14,6 +14,6 @@ namespace WhoDeenii.Domain.Contracts.Interfaces
     {
         Task<ApiResponse<string>> DeleteAttachedDocumentAsync(int id);
         Task<ApiResponse<List<AttachDocuments>>> ReservationByReservationIdAsync(string reservationId);
-        Task<ApiResponse<string>> UploadFileAsync( AttachDocumentsRequest attach);
+        Task<ApiResponse<string>> UploadFileAsync( AttachDocumentsRequest request);
     }
 }

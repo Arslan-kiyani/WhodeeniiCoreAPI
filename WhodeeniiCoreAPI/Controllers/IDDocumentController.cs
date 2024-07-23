@@ -21,9 +21,9 @@ namespace WhodeeniiCoreAPI.Controllers
         [HttpPost]
         [Route("api/AddIDDocument")]
         [Produces(typeof(ApiResponse<string>))]
-        public async Task<IActionResult> AddIDDocument(IDDocumentRequest idDocumentRequest)
+        public async Task<IActionResult> AddIDDocument(IDDocumentRequest request)
         {
-            var response = await _service.AddIDDocumentAsync(idDocumentRequest);
+            var response = await _service.AddIDDocumentAsync(request);
             return Ok(response);
         }
 

@@ -6,6 +6,6 @@ namespace WhoDeenii.Domain.Contracts.Interfaces
 {
     public interface IIDDocumentService
     {
-        Task<ApiResponse<string>> AddIDDocumentAsync(IDDocumentRequest idDocumentRequest);
+        Task<ApiResponse<string>> AddIDDocumentAsync(IDDocumentRequest request);
     }
 }

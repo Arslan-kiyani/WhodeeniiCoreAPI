@@ -11,6 +11,6 @@ namespace WhoDeenii.Domain.Contracts.Interfaces
 {
     public interface ISendMessageService
     {
-        Task<ApiResponse<string>> SendMessageAsync(WhatsAppMessageRequest message);
+        Task<ApiResponse<string>> SendMessageAsync(WhatsAppMessageRequest request);
     }
 }

@@ -113,28 +113,28 @@ public class AttachedDocumentService : IAttachedDocumentService
     }
 
 
-    public async Task<ApiResponse<string>> UploadFileAsync(AttachDocumentsRequest attach)
+    public async Task<ApiResponse<string>> UploadFileAsync(AttachDocumentsRequest request)
     {
         var response = new ApiResponse<string>();
 
         try
         {
 
-            var reservationExists = await _repository.CheckReservationIdAsync(attach.ReservationId);
+            var reservationExists = await _repository.CheckReservationIdAsync(request.ReservationId);
             if (!reservationExists)
             {
                 response.IsRequestSuccessful = false;
                 response.Errors = new List<string> { "Invalid Reservation Id" };
                 return response;
             }
-            if (attach.file == null || attach.file.Length == 0)
+            if (request.file == null || request.file.Length == 0)
             {
                  response.IsRequestSuccessful = false;
                  response.ErrorMessage = "No file Found.";
                  return response;
             }
             var allowedExtensions = new[] { ".pdf", ".png", ".jpg", ".jpeg" };
-            var extension = Path.GetExtension(attach.file.FileName).ToLowerInvariant();
+            var extension = Path.GetExtension(request.file.FileName).ToLowerInvariant();
 
             if (!allowedExtensions.Contains(extension))
             {
@@ -156,15 +156,15 @@ public class AttachedDocumentService : IAttachedDocumentService
 
             using (var fileStream = new FileStream(filePath, FileMode.Create))
             {
-                await attach.file.CopyToAsync(fileStream);
+                await request.file.CopyToAsync(fileStream);
             }
 
             var document = new AttachDocuments
             {
                 UploadDate = DateTime.Now,
                 FilePath = filePath,
-                DocumentType = attach.DocumentType,
-                ReservationId = attach.ReservationId,   
+                DocumentType = request.DocumentType,
+                ReservationId = request.ReservationId,   
             };
 
             await _repository.AddDocumentAsync(document);

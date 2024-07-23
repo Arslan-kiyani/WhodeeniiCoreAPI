@@ -25,12 +25,12 @@ namespace WhoDeenii.Domain.Services.Services
             _imageSettings = imageSettings.Value;
         }
 
-        public async Task<ApiResponse<string>> AddRegistrationCardAsync(RegistrationCardRequest registrationCardRequest)
+        public async Task<ApiResponse<string>> AddRegistrationCardAsync(RegistrationCardRequest request)
         {
             var response = new ApiResponse<string>();
 
             
-            var reservationExists = await _repository.CheckReservationIdAsync(registrationCardRequest.ReservationId);
+            var reservationExists = await _repository.CheckReservationIdAsync(request.ReservationId);
             if (!reservationExists)
             {
                 response.IsRequestSuccessful = false;
@@ -38,15 +38,15 @@ namespace WhoDeenii.Domain.Services.Services
                 return response;
             }
 
-            var existingRegistrationCard = await _repository.GetRegistrationCardByReservationIdAsync(registrationCardRequest.ReservationId);
+            var existingRegistrationCard = await _repository.GetRegistrationCardByReservationIdAsync(request.ReservationId);
 
             if (existingRegistrationCard != null)
             {
                 existingRegistrationCard.ModifiedDate = DateTime.Now;
-                if (registrationCardRequest.Imagepath != null)
+                if (request.Imagepath != null)
                 {
                     string timestamp = DateTime.Now.ToString("yyyy MM dd HHmmss");
-                    var fileName = $"{timestamp}_{registrationCardRequest.Imagepath.FileName}";
+                    var fileName = $"{timestamp}_{request.Imagepath.FileName}";
                     var imagePath = Path.Combine(_imageSettings.BasePath, fileName);
 
                     try
@@ -55,7 +55,7 @@ namespace WhoDeenii.Domain.Services.Services
 
                         using (var fileStream = new FileStream(imagePath, FileMode.Create))
                         {
-                            await registrationCardRequest.Imagepath.CopyToAsync(fileStream);
+                            await request.Imagepath.CopyToAsync(fileStream);
                         }
 
                         existingRegistrationCard.Imagepath = imagePath;
@@ -92,13 +92,13 @@ namespace WhoDeenii.Domain.Services.Services
             else
             {
                     
-                var registrationCard = _mapper.Map<RegistrationCard>(registrationCardRequest);
+                var registrationCard = _mapper.Map<RegistrationCard>(request);
                 registrationCard.CreatedDate = DateTime.Now;
                 registrationCard.ModifiedDate = DateTime.Now;
 
-                if (registrationCardRequest.Imagepath != null)
+                if (request.Imagepath != null)
                 {
-                    var fileName = $"{Guid.NewGuid()}_{registrationCardRequest.Imagepath.FileName}";
+                    var fileName = $"{Guid.NewGuid()}_{request.Imagepath.FileName}";
                     var imagePath = Path.Combine("C:\\Users\\laptop wala\\Documents\\Images", fileName);
 
                     try
@@ -107,7 +107,7 @@ namespace WhoDeenii.Domain.Services.Services
 
                         using (var fileStream = new FileStream(imagePath, FileMode.Create))
                         {
-                            await registrationCardRequest.Imagepath.CopyToAsync(fileStream);
+                            await request.Imagepath.CopyToAsync(fileStream);
                         }
 
                         registrationCard.Imagepath = imagePath;

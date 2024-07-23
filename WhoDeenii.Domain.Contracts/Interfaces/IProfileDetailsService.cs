@@ -8,7 +8,7 @@ namespace WhoDeenii.Domain.Contracts.Interfaces
 {
     public interface IProfileDetailsService
     {
-        Task<ApiResponse<string>> AddProfileDetailsAsync(ProfileDetailRequest ProfileDetailRequest);
+        Task<ApiResponse<string>> AddProfileDetailsAsync(ProfileDetailRequest request);
         Task<ApiResponse<ProfileDetails>> GetProfileDetailsByReservationIdAsync(string reservationId);
     }
 }

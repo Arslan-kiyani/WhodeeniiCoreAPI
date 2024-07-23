@@ -21,9 +21,9 @@ namespace WhodeeniiCoreAPI.Controllers
         [HttpPost]
         [Route("SendMassage")]
         [Produces(typeof(ApiResponse<string>))]
-        public async Task<ActionResult> SendMassage(WhatsAppMessageRequest message)
+        public async Task<ActionResult> SendMassage(WhatsAppMessageRequest request)
         {
-            var response = await _service.SendMessageAsync(message);
+            var response = await _service.SendMessageAsync(request);
             return Ok(response);
             
         }

@@ -22,9 +22,9 @@ namespace WhodeeniiCoreAPI.Controllers
         [HttpPost]
         [Route("api/AddRegistrationCard")]
         [Produces(typeof(ApiResponse<string>))]
-        public async Task<IActionResult> AddRegistrationCard(RegistrationCardRequest registrationCardRequest)
+        public async Task<IActionResult> AddRegistrationCard(RegistrationCardRequest request)
         {
-            var response = await _service.AddRegistrationCardAsync(registrationCardRequest);
+            var response = await _service.AddRegistrationCardAsync(request);
             return Ok(response);
            
         }

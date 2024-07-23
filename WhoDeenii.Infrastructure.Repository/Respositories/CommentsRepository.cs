@@ -34,7 +34,7 @@ namespace WhoDeenii.Infrastructure.Repository.Respositories
         public async Task<List<Comments>> GetCommentsByReservationIdAsync(string reservationId)
         {
             //return await _context.Comments.FirstOrDefaultAsync(c => c.ReservationId == reservationId);
-            return await _context.Comments.Where(c => c.ReservationId == reservationId).ToListAsync();
+            return await _context.Comments.Where(c => c.ReservationId == reservationId).OrderByDescending(c => c.CreatedDate).ToListAsync();
         }
     }
 }

@@ -20,13 +20,13 @@ namespace WhoDeenii.Domain.Services.Services
             _loggerService = loggerService;
         }
 
-        public async Task<ApiResponse<string>> AddReservationAsync(ReservationRequest reservationRequest)
+        public async Task<ApiResponse<string>> AddReservationAsync(ReservationRequest request)
         {
             var response = new ApiResponse<string>();
 
             try
             {
-                var reservation = _mapper.Map<Reservation>(reservationRequest);
+                var reservation = _mapper.Map<Reservation>(request);
                 await _repository.AddReservationAsync(reservation);
 
                 response.IsRequestSuccessful = true;
@@ -43,7 +43,7 @@ namespace WhoDeenii.Domain.Services.Services
                 {
                     Level = "Error",
                     Application = "WhoDeenii",
-                    MethodInfo = "SomeService.DoSomethingAsync",
+                    MethodInfo = System.Reflection.MethodBase.GetCurrentMethod().Name,
                     Message = ex.Message,
                     Exception = ex.ToString(),
                     Timestamp = DateTime.Now,
@@ -85,7 +85,7 @@ namespace WhoDeenii.Domain.Services.Services
                 {
                     Level = "Error",
                     Application = "WhoDeenii",
-                    MethodInfo = "SomeService.DoSomethingAsync",
+                    MethodInfo = System.Reflection.MethodBase.GetCurrentMethod().Name,
                     Message = ex.Message,
                     Exception = ex.ToString(),
                     Timestamp = DateTime.Now,

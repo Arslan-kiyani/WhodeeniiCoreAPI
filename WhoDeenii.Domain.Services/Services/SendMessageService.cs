@@ -25,13 +25,13 @@ namespace WhoDeenii.Domain.Services.Services
             _loggerService = loggerService;
         }
 
-        public async Task<ApiResponse<string>> SendMessageAsync(WhatsAppMessageRequest message)
+        public async Task<ApiResponse<string>> SendMessageAsync(WhatsAppMessageRequest request)
         {
             var response = new ApiResponse<string>();
 
             try
             {
-                var reservationExists = await _whatsAppMessageRepository.CheckReservationIdAsync(message.ReservationId);
+                var reservationExists = await _whatsAppMessageRepository.CheckReservationIdAsync(request.ReservationId);
 
                 if (!reservationExists)
                 {
@@ -40,10 +40,10 @@ namespace WhoDeenii.Domain.Services.Services
                     return response;
                 }
 
-                if (message.SendingMedium.ToLower() == "whatsapp")
+                if (request.SendingMedium.ToLower() == "whatsapp")
                 {
                     
-                    var WhatsApp = _mapper.Map<WhatsAppMessage>(message);
+                    var WhatsApp = _mapper.Map<WhatsAppMessage>(request);
 
                     WhatsApp.CreatedDate = DateTime.Now;
                     WhatsApp.SendDate = DateTime.Now.AddHours(3);
@@ -57,7 +57,7 @@ namespace WhoDeenii.Domain.Services.Services
                 }
                 else
                 {
-                    var sms = _mapper.Map<SmsMessage>(message);
+                    var sms = _mapper.Map<SmsMessage>(request);
 
                     sms.CreatedDate = DateTime.Now;
                     sms.SendDate = DateTime.Now.AddHours(3);

@@ -21,9 +21,9 @@ namespace WhodeeniiCoreAPI.Controllers
         [HttpPost]
         [Route("api/AddReservation")]
         [Produces(typeof(ApiResponse<string>))]
-        public async Task<IActionResult> AddReservation(ReservationRequest reservationRequest)
+        public async Task<IActionResult> AddReservation(ReservationRequest request)
         {
-            var response = await _service.AddReservationAsync(reservationRequest);
+            var response = await _service.AddReservationAsync(request);
              return Ok(response);
         }
 

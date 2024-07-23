@@ -1,4 +1,5 @@
 ﻿using FluentAssertions.Common;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WhoDeenii.Domain.Contracts.Interfaces;
@@ -20,14 +21,15 @@ namespace WhodeeniiCoreAPI.Controllers
         [HttpPost]
         [Route("Upload")]
         [Produces(typeof(ApiResponse<string>))]
-        public async Task<IActionResult> Upload(AttachDocumentsRequest attach)
+        public async Task<IActionResult> Upload(AttachDocumentsRequest request)
         {
-            var response = await _attachedDocumentService.UploadFileAsync(attach);
+            var response = await _attachedDocumentService.UploadFileAsync(request);
             return Ok(response);
         }
 
         [HttpGet]
-        [Route("byReservationId/{reservationId}")]
+        [Authorize]
+        [Route("Get-byReservationId/{reservationId}")]
         [Produces(typeof(ApiResponse<string>))]
         public async Task<IActionResult> GetAttackedDataByReservationId(string reservationId)
         {

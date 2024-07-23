@@ -6,7 +6,7 @@ namespace WhoDeenii.Domain.Contracts.Interfaces
 {
     public interface IReservationService
     {
-        Task<ApiResponse<string>> AddReservationAsync(ReservationRequest ReservationRequest);
+        Task<ApiResponse<string>> AddReservationAsync(ReservationRequest request);
         Task<ApiResponse<string>> GetReservationByIdAsync(int id);
         Task<ApiResponse<Reservation>> ReservationByReservationIdAsync(string reservationId);
 

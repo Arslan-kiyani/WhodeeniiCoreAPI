@@ -12,20 +12,18 @@ namespace WhodeeniiCoreAPI.Controllers
     public class ProfileDetailController : ControllerBase
     {
         private readonly IProfileDetailsService _profileDetailsService;
-        private readonly ILogger<ProfileDetailController> _logger;
 
-        public ProfileDetailController(IProfileDetailsService profileDetailsService, ILogger<ProfileDetailController> logger)
+        public ProfileDetailController(IProfileDetailsService profileDetailsService)
         {
             _profileDetailsService = profileDetailsService;
-            _logger = logger;
         }
 
         [HttpPost]
         [Route("api/AddProfileDetail")]
         [Produces(typeof(ApiResponse<string>))]
-        public async Task<IActionResult> AddProfileDetail(ProfileDetailRequest profileDetailRequest)
+        public async Task<IActionResult> AddProfileDetail(ProfileDetailRequest request)
         {
-            var response = await _profileDetailsService.AddProfileDetailsAsync(profileDetailRequest);
+            var response = await _profileDetailsService.AddProfileDetailsAsync(request);
             return Ok(response);
         }
 

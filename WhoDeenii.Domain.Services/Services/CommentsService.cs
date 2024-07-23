@@ -31,22 +31,26 @@ namespace WhoDeenii.Domain.Services.Services
         {
             var response = new ApiResponse<string>();
 
+            var reservationExists = await _commentsRepository.CheckReservationIdAsync(request.ReservationId);
+
+            if (!reservationExists)
+            {
+                response.IsRequestSuccessful = false;
+                response.Errors = new List<string> { "Invalid Reservation Id" };
+                return response;
+            }
             try
             {
-                var reservationExists = await _commentsRepository.CheckReservationIdAsync(request.ReservationId);
-                if (reservationExists)
-                {
-
-                    response.IsRequestSuccessful = true;
-                    response.SuccessResponse = "Comment added successfully.";
-                    return response;
-                }
-
+                
                 var Comments = _mapper.Map<Comments>(request);
-
                 await _commentsRepository.AddCommentAsync(Comments);
-            }catch (Exception ex)
+
+                response.IsRequestSuccessful = true;
+                response.SuccessResponse = "Comment added successfully.";
+            }
+            catch (Exception ex)
             {
+
                 response.IsRequestSuccessful = false;
                 response.Errors = new List<string> { "Invalid Reservation Id" };
 

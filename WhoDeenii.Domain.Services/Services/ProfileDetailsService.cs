@@ -26,14 +26,14 @@ namespace WhoDeenii.Domain.Services.Services
             
         }
 
-        public async Task<ApiResponse<string>> AddProfileDetailsAsync(ProfileDetailRequest profileDetailRequest)
+        public async Task<ApiResponse<string>> AddProfileDetailsAsync(ProfileDetailRequest request)
         {
             var response = new ApiResponse<string>();
 
             try
             {
 
-                var reservationExists = await _reservationRepository.ReservationExistsAsync(profileDetailRequest.ReservationId);
+                var reservationExists = await _reservationRepository.ReservationExistsAsync(request.ReservationId);
                 if (!reservationExists)
                 {
                     response.IsRequestSuccessful = false;
@@ -41,7 +41,7 @@ namespace WhoDeenii.Domain.Services.Services
                     return response;
                 }
 
-                var profile = _mapper.Map<ProfileDetails>(profileDetailRequest);
+                var profile = _mapper.Map<ProfileDetails>(request);
                 await _profileDetailsRepository.AddProfileDetailsAsync(profile);
 
                 response.IsRequestSuccessful = true;

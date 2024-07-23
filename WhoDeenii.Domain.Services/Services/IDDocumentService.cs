@@ -25,11 +25,11 @@ namespace WhoDeenii.Domain.Services.Services
             
         }
 
-        public async Task<ApiResponse<string>> AddIDDocumentAsync(IDDocumentRequest idDocumentRequest)
+        public async Task<ApiResponse<string>> AddIDDocumentAsync(IDDocumentRequest request)
         {
             var response = new ApiResponse<string>();
 
-            var reservationExists = await _repository.CheckReservationIdAsync(idDocumentRequest.ReservationId);
+            var reservationExists = await _repository.CheckReservationIdAsync(request.ReservationId);
             if (!reservationExists)
             {
                 response.IsRequestSuccessful = false;
@@ -37,16 +37,16 @@ namespace WhoDeenii.Domain.Services.Services
                 return response;
             }
 
-            var existingDocument = await _repository.GetIDDocumentByReservationIdAsync(idDocumentRequest.ReservationId);
+            var existingDocument = await _repository.GetIDDocumentByReservationIdAsync(request.ReservationId);
 
             if (existingDocument != null)
             {
                 existingDocument.ModifiedDate = DateTime.Now;
 
-                if (idDocumentRequest.ImagePath != null)
+                if (request.ImagePath != null)
                 {
                     string timestamp = DateTime.Now.ToString("yyyy MM dd HHmmss");
-                    var fileName = $"{timestamp}_{idDocumentRequest.ImagePath.FileName}";
+                    var fileName = $"{timestamp}_{request.ImagePath.FileName}";
                     var imagePath = Path.Combine(_imageSettings.BasePath, fileName);
 
                     try
@@ -55,7 +55,7 @@ namespace WhoDeenii.Domain.Services.Services
 
                         using (var fileStream = new FileStream(imagePath, FileMode.Create))
                         {
-                            await idDocumentRequest.ImagePath.CopyToAsync(fileStream);
+                            await request.ImagePath.CopyToAsync(fileStream);
                         }
 
                         existingDocument.ImagePath = imagePath;
@@ -90,14 +90,14 @@ namespace WhoDeenii.Domain.Services.Services
             }
             else
             {
-                var idDocument = _mapper.Map<IDDocument>(idDocumentRequest);
+                var idDocument = _mapper.Map<IDDocument>(request);
                 idDocument.CreatedDate = DateTime.Now;
                 idDocument.ModifiedDate = DateTime.Now;
 
-                if (idDocumentRequest.ImagePath != null)
+                if (request.ImagePath != null)
                 {
                     string timestamp = DateTime.Now.ToString("yyyy MM dd HHmmss");
-                    var fileName = $"{timestamp}_{idDocumentRequest.ImagePath.FileName}";
+                    var fileName = $"{timestamp}_{request.ImagePath.FileName}";
                     var imagePath = Path.Combine(_imageSettings.BasePath, fileName);
 
                     try
@@ -106,7 +106,7 @@ namespace WhoDeenii.Domain.Services.Services
 
                         using (var fileStream = new FileStream(imagePath, FileMode.Create))
                         {
-                            await idDocumentRequest.ImagePath.CopyToAsync(fileStream);
+                            await request.ImagePath.CopyToAsync(fileStream);
                         }
 
                         idDocument.ImagePath = imagePath;
