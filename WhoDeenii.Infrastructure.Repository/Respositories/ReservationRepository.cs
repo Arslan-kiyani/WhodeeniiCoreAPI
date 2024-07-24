@@ -40,53 +40,30 @@ namespace WhoDeenii.Infrastructure.Repository.Respositories
 
         public async Task<GetReservationDetailsResponse> GetReservationDetailsByReservationIdAsync(string reservationId)
         {
-            var missingTables = new List<string>();
+            var reservationDetails = await (from rc in _whoDeeniiDbContext.RegistrationCards
+                                            join idd in _whoDeeniiDbContext.IDDocuments on rc.ReservationId equals idd.ReservationId into iddGroup
+                                            from idd in iddGroup.DefaultIfEmpty()
+                                            join pd in _whoDeeniiDbContext.ProfileDetails on rc.ReservationId equals pd.ReservationId into pdGroup
+                                            from pd in pdGroup.DefaultIfEmpty()
+                                            where rc.ReservationId == reservationId
+                                            select new GetReservationDetails
+                                            {
+                                                ReservationId = reservationId,
+                                                ModifiedDateRegistrationCards = rc.ModifiedDate.ToString("yyyy-MM-dd HH:mm:ss"),
+                                                IDDocumentsimagePath = idd.ImagePath ?? string.Empty,
+                                                ModifiedDateIDDocuments = idd.ModifiedDate.ToString("yyyy-MM-dd HH:mm:ss"),
+                                                RegistrationCardsimagePath = rc.Imagepath ?? string.Empty,
+                                                IsProfileUpdated = pd != null ? pd.IsProfileUpdated : false,
+                                                ProfileCreatedDate = /*pd != null && */ pd.CreatedDate.ToString("yyyy-MM-dd HH:mm:ss"),
+                                            }).FirstOrDefaultAsync();
 
-            var registrationCard = await _whoDeeniiDbContext.RegistrationCards
-                .FirstOrDefaultAsync(id => id.ReservationId == reservationId);
-
-            if (registrationCard == null)
+            return new GetReservationDetailsResponse
             {
-                missingTables.Add("RegistrationCard");
-            }
-
-            var idDocument = await _whoDeeniiDbContext.IDDocuments
-                .FirstOrDefaultAsync(id => id.ReservationId == reservationId);
-
-            if (idDocument == null)
-            {
-                missingTables.Add("IDDocument");
-            }
-           
-            var profileDetails = await _whoDeeniiDbContext.ProfileDetails
-                .FirstOrDefaultAsync(id => id.ReservationId == reservationId);
-
-            if (profileDetails == null)
-            {
-                missingTables.Add("ProfileDetails");
-            }
-
-            var reservationDetails = new GetReservationDetails
-            {
-                ReservationId = reservationId,
-                ModifiedDateRegistrationCards = registrationCard?.ModifiedDate.ToString("yyyy-MM-dd HH:mm:ss") ?? ("N/A"),
-                IDDocumentsimagePath = idDocument?.ImagePath ?? string.Empty,
-                ModifiedDateIDDocuments = idDocument?.ModifiedDate.ToString("yyyy-MM-dd HH:mm:ss") ?? ("N/A"),
-                RegistrationCardsimagePath = registrationCard?.Imagepath ?? string.Empty,
-                IsProfileUpdated = profileDetails?.IsProfileUpdated ?? false,
-                ProfileCreatedDate = profileDetails?.CreatedDate.ToString("yyyy-MM-dd HH:mm:ss") ?? ("N/A"),
+                ReservationDetails = reservationDetails
             };
-
-            var response = new GetReservationDetailsResponse
-            {
-                ReservationDetails = reservationDetails,
-                MissingTablesMessage = missingTables.Count > 0
-            ? $"ReservationId {reservationId} does not exist in the following table(s): {string.Join(", ", missingTables)}."
-            : null
-            };
-
-            return response;
         }
+
+
         public async Task<bool> ReservationExistsAsync(string? reservationId)
         {
             return await _whoDeeniiDbContext.Reservations

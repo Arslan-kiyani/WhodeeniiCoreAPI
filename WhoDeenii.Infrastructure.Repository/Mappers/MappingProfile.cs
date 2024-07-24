@@ -35,6 +35,10 @@ namespace WhoDeenii.Infrastructure.Repository.Mappers
             CreateMap<CommentsRequest, Comments>()
                 .ForMember(dest => dest.CreatedDate, opt => opt.MapFrom(src => DateTime.Now));
 
+            CreateMap<RoomDetailsRequest, RoomDetails>()
+               .ForMember(dest => dest.CreatedDate, opt => opt.MapFrom(src => DateTime.Now))
+               .ForMember(dest => dest.ModifiedDate, opt => opt.MapFrom(src => DateTime.Now));
+
         }
     }
 }

@@ -1,3 +1,4 @@
+using FluentAssertions.Common;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -32,29 +33,24 @@ namespace WhodeeniiCoreAPI
             builder.Services.Configure<ImageSettings>(builder.Configuration.GetSection("ImageSettings"));
 
             var jwtSettings = builder.Configuration.GetSection("JwtSettings");
-            builder.Services.Configure<JwtSettings>(jwtSettings);
             var key = Encoding.ASCII.GetBytes(jwtSettings["SecretKey"]);
 
             // Configure authentication with JWT
-            builder.Services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-            .AddJwtBearer(options =>
-            {
-                options.RequireHttpsMetadata = false;
-                options.SaveToken = true;
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidateIssuerSigningKey = true,
-                    ValidIssuer = jwtSettings["Issuer"],
-                    ValidAudience = jwtSettings["Audience"],
-                    IssuerSigningKey = new SymmetricSecurityKey(key)
-                };
-            });
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+             .AddJwtBearer(options =>
+             {
+                 options.TokenValidationParameters = new TokenValidationParameters
+                 {
+                     ValidateIssuerSigningKey = true, // Validate the signing key used to create the token
+                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:SecretKey"])), // Use the secret key from configuration
+                     ValidateIssuer = true, // Validate the issuer of the token
+                     ValidIssuer = builder.Configuration["JwtSettings:Issuer"], // Set the expected issuer
+                     ValidateAudience = true, // Validate the intended recipient of the token
+                     ValidAudience = builder.Configuration["JwtSettings:Audience"], // Set the expected audience
+                     ValidateLifetime = true, // Validate the token expiration time
+                     ClockSkew = TimeSpan.Zero // Set clock skew to zero for strict time validation (optional)
+                 };
+             });
 
             // Register the Swagger generator, defining one or more Swagger documents
             builder.Services.AddSwaggerGen(c =>

@@ -21,6 +21,7 @@ namespace WhoDeenii.Infrastructure.DataAccess
         public DbSet<Comments> Comments { get; set; }
         public DbSet<LogEntry> Logs { get; set; }
 
+        public DbSet<RoomDetails> RoomDetails { get; set; }
 
     }
 }

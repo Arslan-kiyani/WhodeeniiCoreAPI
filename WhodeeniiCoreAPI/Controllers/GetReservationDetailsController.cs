@@ -24,7 +24,6 @@ namespace WhodeeniiCoreAPI.Controllers
         [Produces(typeof(ApiResponse<string>))]
         public async Task<ActionResult<ApiResponse<GetReservationDetails>>> GetReservationDetails(string reservationId)
         {
-            
             var response = await _reservationService.GetReservationDetailsByReservationIdAsync(reservationId);
             return Ok(response);
                

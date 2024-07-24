@@ -29,6 +29,7 @@ namespace WhoDeenii.API.Extensions
             services.AddTransient<IPhotoService, PhotoService>();
             services.AddHttpClient<PhotoService>();
             services.AddScoped<ILoggerService, LoggerService>();
+            services.AddScoped<IRoomDetailsService, RoomDetailsService>();
             //services.AddTransient<ImageSettings>();
 
             // Register PhotoService with IOptions<ImageSettings>

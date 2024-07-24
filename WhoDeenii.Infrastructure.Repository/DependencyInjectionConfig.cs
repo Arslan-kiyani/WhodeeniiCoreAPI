@@ -25,8 +25,8 @@ namespace WhoDeenii.Infrastructure.Repository
             services.AddTransient<ICommentsRepository, CommentsRepository>();
             services.AddTransient<IPhotoRepository, PhotoRepository>();
             services.AddTransient<IRegisterCapRepository, RegisterCapRepository>();
-          
-            
+            services.AddScoped<IRoomDetailsRepository, RoomDetailsRepository>();
+
         }
     }
 }
