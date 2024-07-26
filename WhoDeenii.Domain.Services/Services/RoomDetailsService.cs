@@ -18,11 +18,13 @@ namespace WhoDeenii.Domain.Services.Services
 
         private readonly IRoomDetailsRepository _roomDetailsRepository;
         private readonly IMapper _mapper;
+        private readonly ILoggerService _logger;
 
-        public RoomDetailsService(IRoomDetailsRepository roomDetailsRepository, IMapper mapper)
+        public RoomDetailsService(IRoomDetailsRepository roomDetailsRepository, IMapper mapper, ILoggerService logger)
         {
             _roomDetailsRepository = roomDetailsRepository;
             _mapper = mapper;
+            _logger = logger;
         }
 
         public async Task<ApiResponse<string>> CreateRoomDetailsAsync(RoomDetailsRequest request)
@@ -43,6 +45,20 @@ namespace WhoDeenii.Domain.Services.Services
             {
                 response.IsRequestSuccessful = false;
                 response.Errors = new List<string> { ex.Message };
+
+                var logEntry = new LogEntry
+                {
+                    Level = "Error",
+                    Application = "WhoDeenii",
+                    MethodInfo = System.Reflection.MethodBase.GetCurrentMethod().Name,
+                    Message = ex.Message,
+                    Exception = ex.ToString(),
+                    Timestamp = DateTime.Now,
+                    TransactionId = ex.Message,
+                    Context = "Additional context if needed"
+                };
+
+                await _logger.LogAsync(logEntry);
 
                 return response;
             }

@@ -30,6 +30,8 @@ namespace WhoDeenii.API.Extensions
             services.AddHttpClient<PhotoService>();
             services.AddScoped<ILoggerService, LoggerService>();
             services.AddScoped<IRoomDetailsService, RoomDetailsService>();
+            services.AddSingleton<EmailReaderService>();
+            //services.AddSingleton<PdfImageExtractor>();
             //services.AddTransient<ImageSettings>();
 
             // Register PhotoService with IOptions<ImageSettings>

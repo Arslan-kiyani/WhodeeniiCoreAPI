@@ -17,16 +17,16 @@ namespace WhodeeniiCoreAPI.Controllers
             _roomDetailsService = roomDetailsService;
         }
 
-        // Create
         [HttpPost]
+       
         public async Task<ActionResult> CreateRoomDetails(RoomDetailsRequest request)
         {
             var createdRoomDetails = await _roomDetailsService.CreateRoomDetailsAsync(request);
             return Ok(createdRoomDetails);
         }
 
-        // Update
         [HttpPut("{id}")]
+        
         public async Task<IActionResult> UpdateRoomDetails(int id, RoomDetails roomDetails)
         {
             
@@ -34,8 +34,8 @@ namespace WhodeeniiCoreAPI.Controllers
             return Ok();
         }
 
-        // Delete
         [HttpDelete("{id}")]
+        
         public async Task<IActionResult> DeleteRoomDetails(int id)
         {
             await _roomDetailsService.DeleteRoomDetailsAsync(id);

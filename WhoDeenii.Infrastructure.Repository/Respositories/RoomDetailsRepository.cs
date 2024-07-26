@@ -44,7 +44,7 @@ namespace WhoDeenii.Infrastructure.Repository.Respositories
 
         public async Task UpdateRoomDetailsAsync(RoomDetails roomDetails)
         {
-            _context.Entry(roomDetails).State = EntityState.Modified;
+            _context.RoomDetails.Update(roomDetails);
             await _context.SaveChangesAsync();
         }
     }
