@@ -8,6 +8,7 @@ using WhoDeenii.API.Extensions;
 using WhoDeenii.Domain.Contracts.Interfaces;
 using WhoDeenii.Domain.Services.Services;
 using WhoDeenii.Infrastructure.DataAccess;
+using WhoDeenii.Infrastructure.DataAccess.Handler;
 using WhoDeenii.Infrastructure.Repository;
 using WhoDeenii.Infrastructure.Repository.Interfaces;
 using WhoDeenii.Infrastructure.Repository.Mappers;
@@ -69,6 +70,19 @@ namespace WhodeeniiCoreAPI
                     }
                 });
             });
+
+            // Add Hangfire services
+            //builder.Services.AddHangfire(configuration => configuration
+            //    .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+            //    .UseSimpleAssemblyNameTypeSerializer()
+            //    .UseRecommendedSerializerSettings()
+            //    .UseSqlServerStorage(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            //builder.Services.AddHangfireServer();
+
+            // Register HangfireJobs
+            builder.Services.Configure<HangfireConfig>(builder.Configuration.GetSection("HangfireConfig"));
+            builder.Services.Configure<HangfireConfigString>(builder.Configuration.GetSection("HangfireConfigString"));
 
             builder.Services.AddControllers();
             builder.Services.AddAutoMapper(typeof(MappingProfile));

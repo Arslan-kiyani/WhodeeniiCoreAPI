@@ -3,9 +3,6 @@ using MailKit.Security;
 using MimeKit;
 using Microsoft.Extensions.Configuration;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading.Tasks;
 using MailKit.Search;
 using MailKit;
 using WhoDeenii.Domain.Services.Services;
@@ -30,7 +27,7 @@ public class EmailReaderService
         Directory.CreateDirectory(attachmentsFolder);
     }
 
-    public async Task<List<MimeMessage>> ReadEmailsAsync(int startIndex = 0)
+    public async Task<List<MimeMessage>> ReadEmailsAsync()
     {
         var unreadEmails = new List<MimeMessage>();
 
@@ -96,13 +93,18 @@ public class EmailReaderService
 
     private async Task SaveAttachmentsAsync(MimeMessage message)
     {
+        var currentDate = DateTime.Now.ToString("yyyy-MM-dd");
+        var currentFolder = Path.Combine(attachmentsFolder, currentDate);
+
+        Directory.CreateDirectory(currentFolder);
+
         foreach (var attachment in message.Attachments)
         {
             if (attachment is MimePart mimePart)
             {
                 var fileName = mimePart.ContentDisposition?.FileName ?? mimePart.ContentType.Name;
                 var uniqueFileName = GetUniqueFileName(fileName);
-                var attachmentFilePath = Path.Combine(attachmentsFolder, fileName);
+                var attachmentFilePath = Path.Combine(currentFolder, uniqueFileName);
 
                 using (var stream = File.Create(attachmentFilePath))
                 {
@@ -111,10 +113,10 @@ public class EmailReaderService
 
                 if (fileName.EndsWith(".pdf", StringComparison.OrdinalIgnoreCase))
                 {
-                    var outputFolder = Path.Combine(attachmentsFolder, Path.GetFileNameWithoutExtension(fileName));
-                    var pdfImageExtractor = new PdfImageExtractor(attachmentFilePath, outputFolder);
+                    var pdfImageExtractor = new PdfImageExtractor(attachmentFilePath, currentFolder);
                     pdfImageExtractor.ExtractImages();
                 }
+
             }
         }
     }
@@ -123,7 +125,8 @@ public class EmailReaderService
     {
         var extension = Path.GetExtension(fileName);
         var nameWithoutExtension = Path.GetFileNameWithoutExtension(fileName);
-        var uniqueName = $"{nameWithoutExtension}_{DateTime.Now}{extension}";
+        var timestamp = DateTime.Now.ToString("yyyy-MM-dd"); 
+        var uniqueName = $"{nameWithoutExtension}{timestamp}{extension}";
 
         return uniqueName;
     }
@@ -158,7 +161,8 @@ public class EmailReaderService
 
                     for (int i = 0; i < pdf.Pages.Count; i++)
                     {
-                        string pageImageFilePath = Path.Combine(_outputFolder, $"Page_{imageCounter}.png");
+                        var timestamp = DateTime.Now.ToString("yyyy-MM-dd");
+                        string pageImageFilePath = Path.Combine(_outputFolder, $"{timestamp}_image.png");
 
                         using (Bitmap bitmap = (Bitmap)pdf.SaveAsImage(i, 300, 300))
                         {

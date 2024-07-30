@@ -423,7 +423,6 @@ ASALocalRun/
 *.json
 /WhoDeenii.Infrastructure.DataAccess/bin/Debug/net8.0/WhoDeenii.Infrastructure.DataAccess.dll
 /WhoDeenii.Infrastructure.DataAccess/bin/Debug/net8.0/WhoDeenii.Infrastructure.DataAccess.pdb
-/WhodeeniiCoreAPI/bin/Debug/net8.0/appsettings.json
 /WhodeeniiCoreAPI/bin/Debug/net8.0/System.CodeDom.dll
 /WhodeeniiCoreAPI/bin/Debug/net8.0/WhoDeenii.Domain.Contracts.dll
 /WhodeeniiCoreAPI/bin/Debug/net8.0/WhoDeenii.Domain.Contracts.pdb
